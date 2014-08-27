@@ -1,0 +1,49 @@
+{
+   "ALL" : null,
+   "PrinterIn" : {
+      "prspeed" : "ls",
+      "prtype" : "ck"
+   },
+   "PrinterOut" : {
+      "prspeed" : "hs",
+      "prtype" : "bk",
+      "welcomeauto" : "wno"
+   },
+   "base" : {
+      "hw" : "1.1",
+      "lan" : "chn",
+      "mode" : "test",
+      "name" : "税友智能盒",
+      "sw" : "1.0"
+   },
+   "tcp-ip" : {
+      "dsn" : [ "8.8.8.8", "9.9.9.9" ],
+      "gateway" : "192.168.2.1",
+      "hardware" : "lan",
+      "ip" : "192.168.2.108",
+      "ipver" : "ipv4",
+      "mode" : "static",
+      "name" : "NC616v3",
+      "netmask" : "255.255.255.0"
+   },
+   "timeset" : {
+      "datefmt" : "y-m-d",
+      "ntpset" : {
+         "enable" : false,
+         "port" : 123,
+         "serverip" : "clock,isc.org",
+         "update" : 5
+      },
+      "timefmt" : "24h"
+   },
+   "user" : [
+      {
+         "name" : "root",
+         "password" : "root"
+      },
+      {
+         "name" : "admin",
+         "password" : "admin"
+      }
+   ]
+}

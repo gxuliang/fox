@@ -1,0 +1,816 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"tra",
+				"tracepoint"
+			],
+			[
+				"pi",
+				"public"
+			],
+			[
+				"sy_",
+				"sy_net"
+			],
+			[
+				"s",
+				"start"
+			],
+			[
+				"in",
+				"instance"
+			],
+			[
+				"de",
+				"debugf"
+			],
+			[
+				"p",
+				"pPrinter"
+			],
+			[
+				"tr",
+				"tracepoint"
+			],
+			[
+				"fl",
+				"false"
+			],
+			[
+				"sp",
+				"split"
+			],
+			[
+				"ret",
+				"return"
+			],
+			[
+				"c",
+				"cmd"
+			],
+			[
+				"def",
+				"define"
+			],
+			[
+				"addr",
+				"addr_len"
+			],
+			[
+				"a",
+				"alert"
+			],
+			[
+				"pr",
+				"progress"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"fu",
+				"function"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/Users/xul/work/fox1/IPC200/Bin/Config",
+			"settings":
+			{
+				"buffer_size": 957,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/sy_main.cpp",
+			"settings":
+			{
+				"buffer_size": 1127,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/sy_printer.cpp",
+			"settings":
+			{
+				"buffer_size": 4298,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/sy_printer.h",
+			"settings":
+			{
+				"buffer_size": 828,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/sy_configManager.cpp",
+			"settings":
+			{
+				"buffer_size": 5880,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/sy_netService.cpp",
+			"settings":
+			{
+				"buffer_size": 1807,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "inc/NetService/sy_netService.h",
+			"settings":
+			{
+				"buffer_size": 371,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/sy_netService.h",
+			"settings":
+			{
+				"buffer_size": 867,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "inc/base/sy_net.h",
+			"settings":
+			{
+				"buffer_size": 602,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/sy_net.cpp",
+			"settings":
+			{
+				"buffer_size": 534,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Makefile",
+			"settings":
+			{
+				"buffer_size": 943,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "inc/Manager/sy_configManager.h",
+			"settings":
+			{
+				"buffer_size": 1728,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/sy_configManager.h",
+			"settings":
+			{
+				"buffer_size": 1427,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/C++/C++.sublime-build",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+			[
+				"ip",
+				"Package Control: Install Package"
+			],
+			[
+				"ht",
+				"Set Syntax: HTML"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Volumes/Transcend/fox/app/src/sy_configManager.h",
+		"/Volumes/Transcend/fox/app/src/sy_netrpc.cpp",
+		"/Volumes/Transcend/fox/app/src/sy_rpcmethod.h",
+		"/Volumes/Transcend/fox/app/src/sy_rpcmethod.cpp",
+		"/Users/xul/work/fox1/IPC200/app/src/sy_thread.cpp",
+		"/Users/xul/work/fox1/IPC200/app/src/sy_mem.cpp",
+		"/Users/xul/work/fox1/IPC200/app/src/sy_user.cpp",
+		"/Users/xul/work/fox1/IPC200/app/src/sy_thread.h",
+		"/Users/xul/work/fox1/IPC200/app/src/sy_printer.cpp",
+		"/Users/xul/work/fox1/IPC200/app/src/sy_printer.h",
+		"/Users/xul/work/fox1/IPC200/app/Makefile",
+		"/Users/xul/work/fox1/IPC200/app/src/sy_rpcmethod.h",
+		"/Users/xul/work/fox1/IPC200/app/src/sy_netrpc.cpp",
+		"/Users/xul/work/fox1/IPC200/app/src/sy_main.cpp",
+		"/Users/xul/work/fox1/app/inc/printer.h",
+		"/Users/xul/work/fox1/IPC200/app/src/sy_rpcmethod.cpp",
+		"/Users/xul/work/fox1/IPC200/app/src/sy_netrpc.h",
+		"/Users/xul/work/fox1/web/index.html",
+		"/Users/xul/work/fox1/app/inc/system.h",
+		"/Users/xul/work/fox1/IPC200/app/inc/rpc/sy_netrpc.h",
+		"/Users/xul/work/fox1/IPC200/app/inc/Media/sy_media.h",
+		"/Users/xul/work/fox1/IPC200/app/src/sy_encode.h",
+		"/Users/xul/work/fox1/app/src/main.cpp",
+		"/Users/xul/work/fox1/app/Makefile",
+		"/Users/xul/work/fox1/app/inc/webservice.h",
+		"/Users/xul/work/fox1/app/inc/def.h",
+		"/Users/xul/work/fox1/app/src/webservice.cpp",
+		"/Users/xul/work/mysite/mysite/settings.py",
+		"/Users/xul/work/mysite/jony/views.py",
+		"/Users/xul/work/mysite/mysite/urls.py",
+		"/Users/xul/work/mysite/mysite/index.py",
+		"/Users/xul/work/mysite/admin/jony/item/index.html",
+		"/Users/xul/Downloads/usmanhalalit-charisma-df8e296/index.html",
+		"/Users/xul/work/mysite/admin/jony/item/css/bootstrap.min.css",
+		"/Users/xul/work/mysite/jony/__init__.py",
+		"/Users/xul/work/mysite/more_with_admin/templates/admin/examples/document/change_form.html",
+		"/Users/xul/work/mysite/books/models.py",
+		"/Users/xul/work/mysite/books/admin.py",
+		"/Users/xul/work/mysite/manage.py",
+		"/Users/xul/work/mysite/jony/admin.pyc",
+		"/Users/xul/work/mysite/jony/admin.py",
+		"/Users/xul/app/djcode/mysite/mysite/settings.pyc",
+		"/Volumes/mac/资料/串口服务器资料/app/nc600-2.0/Makefile",
+		"/Users/xul/app/goagent-goagent/local/bash",
+		"/Users/xul/Dropbox/Project/upgrade/src/net.h",
+		"/Users/xul/Dropbox/Project/IPC200/web/js/rpc.js",
+		"/Users/xul/Dropbox/Project/IPC200/demoweb/js/upgrade.js",
+		"/Users/xul/Dropbox/Project/IPC200/demoweb/upgrade.html",
+		"/Users/xul/Dropbox/Project/rpcupgrade/src/main.c",
+		"/Users/xul/Dropbox/Project/upgrade/src/net.c",
+		"/Users/xul/Dropbox/Project/upgrade/src/upgrade.c",
+		"/Users/xul/Dropbox/Project/upgrade/src/mtdop.c",
+		"/Users/xul/Dropbox/Project/IPC200/web/js/sy_ready.js",
+		"/Users/xul/Dropbox/Project/IPC200/web/index.html",
+		"/Users/xul/Documents/串口服务器资料/app/web/new_upgrade.html",
+		"/Users/xul/Dropbox/Project/IPC200/demoweb/index.html",
+		"/Users/xul/Documents/oschina/sky one/module/data/inc/packet.h",
+		"/Users/xul/Documents/oschina/sky one/module/data/inc/cdata.h",
+		"/Users/xul/Documents/oschina/sky one/module/data/inc/types.h",
+		"/Users/xul/Documents/oschina/sky one/module/data/src/cdata.cpp",
+		"/Users/xul/Documents/oschina/sky one/module/data/inc/cfile.h",
+		"/Users/xul/Documents/oschina/sky one/module/data/src/cfile.cpp",
+		"/Users/xul/Documents/oschina/sky one/module/data/inc/cprint.h",
+		"/Users/xul/Documents/oschina/sky one/module/data/src/cprint.cpp",
+		"/Users/xul/Documents/oschina/sky one/module/data/Makefile",
+		"/Users/xul/Documents/oschina/sky one/module/data/test.cpp",
+		"/Users/xul/Documents/oschina/sky one/module/data/src/print.cpp",
+		"/Users/xul/Documents/oschina/sky one/module/data/inc/print.h",
+		"/Users/xul/Documents/oschina/sky one/module/data/test/test.cpp",
+		"/Users/xul/Documents/oschina/sky one/README.md",
+		"/Users/xul/Desktop/goagent-goagent-5931bf7/local/auto",
+		"/Users/xul/Dropbox/Project/IPC200/demoweb/js/bootstrap.js"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"all",
+			"a'l'l",
+			"bufstatus",
+			"view",
+			"TCP/IP",
+			"打印机",
+			"#view",
+			"			<li class=\"icn_tags\"><a href=\"#\">系统设定</a></li>\nview",
+			"view",
+			"angular.min.js.map",
+			"angular",
+			"angular.min.js",
+			"angular.min.js.map",
+			"charisma.js",
+			"charisma",
+			"charisma.js",
+			"/js/charisma.js",
+			"bootstrap",
+			"cerulean",
+			"href",
+			"js",
+			"())",
+			"TIMEZONE",
+			"DIR",
+			"STATICFILES_FINDERS",
+			"TEMPLATE_DIRS",
+			"TEMPLATE_DIR",
+			"BASE_DIR",
+			"DATABASE_NA",
+			"oncl",
+			"btn-group",
+			"wlsz",
+			"Collapse",
+			"xul",
+			"table-condensed",
+			"table",
+			"row-fluid",
+			"mset",
+			"onclick",
+			"data-slider-min",
+			"data-slider-orientation",
+			"navbar",
+			"data-slider-min",
+			"span2",
+			"prefs",
+			"p're'f's",
+			"table-condensed",
+			"high",
+			"table",
+			"span2",
+			"active",
+			"local",
+			"hero-unit",
+			"row",
+			"thumbnails",
+			"container",
+			"IConfigManager",
+			"NTP",
+			"右边DIV3\nNTP对",
+			"右边DIV3\n",
+			"no",
+			"视频"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 5,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/Users/xul/work/fox1/IPC200/Bin/Config",
+					"settings":
+					{
+						"buffer_size": 957,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								311,
+								311
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 3,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/sy_main.cpp",
+					"settings":
+					{
+						"buffer_size": 1127,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								713,
+								741
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 13.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/sy_printer.cpp",
+					"settings":
+					{
+						"buffer_size": 4298,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2236,
+								2236
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1457.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/sy_printer.h",
+					"settings":
+					{
+						"buffer_size": 828,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								407,
+								410
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "src/sy_configManager.cpp",
+					"settings":
+					{
+						"buffer_size": 5880,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4372,
+								4372
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2973.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "src/sy_netService.cpp",
+					"settings":
+					{
+						"buffer_size": 1807,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								428,
+								428
+							]
+						],
+						"settings":
+						{
+							"is_xml": false,
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 381.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "inc/NetService/sy_netService.h",
+					"settings":
+					{
+						"buffer_size": 371,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								50,
+								50
+							]
+						],
+						"settings":
+						{
+							"is_xml": false,
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "src/sy_netService.h",
+					"settings":
+					{
+						"buffer_size": 867,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								674,
+								674
+							]
+						],
+						"settings":
+						{
+							"is_xml": false,
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "inc/base/sy_net.h",
+					"settings":
+					{
+						"buffer_size": 602,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								152,
+								152
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "src/sy_net.cpp",
+					"settings":
+					{
+						"buffer_size": 534,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								184,
+								184
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 74.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "Makefile",
+					"settings":
+					{
+						"buffer_size": 943,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								490,
+								490
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Makefile/Makefile.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 54.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "inc/Manager/sy_configManager.h",
+					"settings":
+					{
+						"buffer_size": 1728,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								281,
+								281
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "src/sy_configManager.h",
+					"settings":
+					{
+						"buffer_size": 1427,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1348,
+								1348
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 314.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 100.0
+	},
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"",
+				"/Users/xul/work/fox1/IPC200/app/src/sy_main.cpp"
+			],
+			[
+				"main",
+				"src/sy_main.cpp"
+			],
+			[
+				"con",
+				"src/sy_configManager.cpp"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true
+}
