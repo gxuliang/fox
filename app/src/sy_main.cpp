@@ -39,7 +39,8 @@ int main(int argc, char* argv[])
 	gPrintOut = &printOut;
 	IPrinter printIn = IPrinter(0, aConfig["PrinterIn"], &printOut);//a=打印机输入，b=打印机输出
 	INetService::instance()->setConfig("NetService", aConfig["NetService"]);
-
+	
+	infof("<%p>\n", INetService::instance());
 
 	CSemaphore sem;
 	sem.Pend();

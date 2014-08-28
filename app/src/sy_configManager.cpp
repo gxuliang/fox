@@ -187,16 +187,6 @@ int CConfigManager::setConfig(const char* name, const CConfigTable& table, const
 		saveFile();
 		m_mutex.Leave();
 
-		for(iter = svec.begin(); iter != svec.end(); iter++)
-		{
-			if(strcmp((*iter)->str, name) == 0)
-			{
-				tracepoint();
-				(*iter)->setConfig(name, table[name]);
-				break;
-			}
-		}
-
 		// 统一记录日志
 		//CLog::instance()->append("RecallConfig", 0, user);
 
@@ -222,6 +212,18 @@ int CConfigManager::setConfig(const char* name, const CConfigTable& table, const
 	m_changed = true;
 	saveFile();
 	m_mutex.Leave();
+
+	infof("+++++++++++++++++++++++++++\n");
+	for(iter = svec.begin(); iter != svec.end(); iter++)
+	{
+		tracepoint();
+		//if(strcmp((*iter)->str, name) == 0)
+		{
+			tracepoint();
+			infof("%p\n", *iter);
+			//(*iter)->setConfig(name, table[name]);
+		}
+	}
 	//保存文件,优先处理延迟保存
 	//if (!(ret & applyDelaySave))
 	//{
@@ -236,9 +238,16 @@ int CConfigManager::setConfig(const char* name, const CConfigTable& table, const
 	return ret;
 }
 
+#include "base/sy_semaphore.h"
+
+#include "sy_printer.h"
+
+#include "sy_netService.h"
+
 void CConfigManager::reg(ISetConfig* p)
 {
-	svec.push_back(p);
+	infof("--------------%p---------------\n",dynamic_cast<CNetService*>(p));
+	svec.push_back(dynamic_cast<CNetService*>(p));
 }
 
 void CConfigManager::saveFile()

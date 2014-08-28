@@ -26,7 +26,7 @@ class CNetService : public INetService, public CThread, public ISetConfig
 public:
 	PATTERN_SINGLETON_DECLARE(CNetService)
 
-	bool setConfig(const char* name,CConfigTable& table);//设置后自动生效
+	bool setConfig(const char* name,const CConfigTable& table);//设置后自动生效
 	bool getState(CConfigTable& table);//获取连接状态
 	bool reg(IPrinter* p);
 

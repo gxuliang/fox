@@ -25,6 +25,7 @@ CNetService::CNetService()
 {
 	loopflag = false;
 	mPrinter = NULL;
+	infof("000000000000000[%p]\n", this);
 	IConfigManager::instance()->reg(this);
 }
 
@@ -34,11 +35,12 @@ bool CNetService::reg(IPrinter* p)
 	return true;
 }
 
-bool CNetService::setConfig(const char* name, CConfigTable& table) 
+bool CNetService::setConfig(const char* name, const CConfigTable& table) 
 {
 	ipaddr = table["ipaddr"].asString();
 	port = table["port"].asUInt();
-	strncpy(str, name, sizeof(str));
+	//strncpy(str, name, sizeof(str));
+	infof("name is [%s], ip = [%s], port = %d\n", name, ipaddr.c_str(), port);
 	restart();
 	return true;
 }
@@ -94,15 +96,22 @@ void CNetService::ThreadProc()
 				sleep(1);
 				continue;
 			}
+		}
 
 			int len = sock->read(buf, BUF_MAX);
 			infof("read network data len = %d\n", len);
+			if(len <= 0)
+			{
+				errorf("net ill, reconnect!\n");
+				sock->close();
+				continue;
+			}
 			while(mPrinter->put(buf, len) == false)
 			{
 				errorf("buf is full,try it again after 1sc...\n");
 				sleep(1);
 			}
-		}
+		
 
 	}
 
@@ -114,6 +123,9 @@ void CNetService::ThreadProc()
 
 INetService *INetService::instance()
 {
+	infof("[%p]\n", CNetService::instance());
+
+
 	return CNetService::instance();
 }
 
