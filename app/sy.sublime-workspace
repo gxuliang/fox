@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"if",
+				"infof"
+			],
+			[
+				"con",
+				"continue"
+			],
+			[
+				"co",
+				"connect"
+			],
+			[
 				"tra",
 				"tracepoint"
 			],
@@ -91,7 +103,7 @@
 			"file": "src/sy_main.cpp",
 			"settings":
 			{
-				"buffer_size": 1127,
+				"buffer_size": 1171,
 				"line_ending": "Unix"
 			}
 		},
@@ -115,7 +127,7 @@
 			"file": "src/sy_configManager.cpp",
 			"settings":
 			{
-				"buffer_size": 5880,
+				"buffer_size": 6068,
 				"line_ending": "Unix"
 			}
 		},
@@ -123,7 +135,7 @@
 			"file": "src/sy_netService.cpp",
 			"settings":
 			{
-				"buffer_size": 1807,
+				"buffer_size": 2141,
 				"line_ending": "Unix"
 			}
 		},
@@ -131,7 +143,7 @@
 			"file": "inc/NetService/sy_netService.h",
 			"settings":
 			{
-				"buffer_size": 371,
+				"buffer_size": 377,
 				"line_ending": "Unix"
 			}
 		},
@@ -139,7 +151,7 @@
 			"file": "src/sy_netService.h",
 			"settings":
 			{
-				"buffer_size": 867,
+				"buffer_size": 888,
 				"line_ending": "Unix"
 			}
 		},
@@ -147,7 +159,7 @@
 			"file": "inc/base/sy_net.h",
 			"settings":
 			{
-				"buffer_size": 602,
+				"buffer_size": 666,
 				"line_ending": "Unix"
 			}
 		},
@@ -155,7 +167,7 @@
 			"file": "src/sy_net.cpp",
 			"settings":
 			{
-				"buffer_size": 534,
+				"buffer_size": 1109,
 				"line_ending": "Unix"
 			}
 		},
@@ -168,10 +180,13 @@
 			}
 		},
 		{
+			"contents": "/*\n * sy_configManager.h\n *\n *  Created on: 2013-3-19\n *      Author: xul\n */\n\n#ifndef _EX_SY_CONFIGMANAGER_H_\n#define _EX_SY_CONFIGMANAGER_H_\n\nclass ISetConfig\n{\npublic:\n	virtual ~ISetConfig(){};\n	//char str[32];\n	virtual bool setConfig(const char* name, const CConfigTable& table){};\n};\n\nclass IConfigManager\n{\npublic:\n\n	/// 配置应用方式或者结果，按位表示，由配置的观察者函数和commit调用前后都可以\n	/// 设置和检查\n	enum ApplyOptions\n	{\n		applySuccess			= 0x00000000,	///< 成功\n		applyFailed				= 0x0000006c,	///< 失败掩码\n		applyNeedRestart		= 0x00000001,	///< 需要重启应用程序\n		applyNeedReboot			= 0x00000002,	///< 需要重启系统\n		applyWriteFileError		= 0x00000004,	///< 写文件出错\n		applyCapsNotSupport		= 0x00000008,	///< 特性不支持\n		applyValidateFailed		= 0x00000020,	///< 验证失败\n		applyNotExist			= 0x00000040,	///< 配置不存在，根据配置名访问是可能会发生\n		applyDelaySave			= 0x00000100,	///< 延时保存，commit函数传入\n		applyWithoutLog			= 0x00000200,	///< 提交是不要记录日志，commit函数传入\n	};\n\n\n	static void config(const char* mainPath, const char* defaultPath);\n\n	static IConfigManager *instance();\n\n	virtual ~IConfigManager(){};\n\n	virtual bool getDefault(const char* name, CConfigTable& table) = 0;\n\n	virtual void saveFile() = 0;\n\n	// 得到最新的配置结构\n	/// \\param name 配置名称\n	virtual bool getConfig(const char* name, CConfigTable& table) = 0;\n\n	/// 提交配置，含合法性检查，调用saveFile函数保存文件。\n	/// \\param name 配置名称;当配置名称传\"All\"的时候保存的是所有配置\n	/// \\param table 新的配置\n	/// \\param user 用户名\n	/// \\param applyOptions 返回值初始值，取ApplyOptions位与值。\n	/// \\return 配置应用的结果，取ApplyOptions位与值，applyOptions作为返回值的初始值。\n	///         (!(返回值&applyFailed))的结果可以表示配置是否应用成功。\n	virtual int setConfig(const char* name, const CConfigTable& table, const char* user = 0,\n		int applyOptions = applyDelaySave) = 0;\n\n	virtual void reg(void*) = 0;\n\n};\n\n\n#endif /* SY_CONFIGMANAGER_H_ */\n",
 			"file": "inc/Manager/sy_configManager.h",
+			"file_size": 2182,
+			"file_write_time": 1409247459000000,
 			"settings":
 			{
-				"buffer_size": 1728,
+				"buffer_size": 1724,
 				"line_ending": "Unix"
 			}
 		},
@@ -179,7 +194,7 @@
 			"file": "src/sy_configManager.h",
 			"settings":
 			{
-				"buffer_size": 1427,
+				"buffer_size": 1421,
 				"line_ending": "Unix"
 			}
 		}
@@ -216,6 +231,7 @@
 	},
 	"file_history":
 	[
+		"/Volumes/Transcend/fox/app/inc/Manager/sy_configManager.h",
 		"/Volumes/Transcend/fox/app/src/sy_configManager.h",
 		"/Volumes/Transcend/fox/app/src/sy_netrpc.cpp",
 		"/Volumes/Transcend/fox/app/src/sy_rpcmethod.h",
@@ -420,15 +436,15 @@
 					"file": "src/sy_main.cpp",
 					"settings":
 					{
-						"buffer_size": 1127,
+						"buffer_size": 1171,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								713,
-								741
+								1082,
+								1082
 							]
 						],
 						"settings":
@@ -437,7 +453,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 13.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -464,7 +480,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1457.0,
+						"translation.y": 1611.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -501,15 +517,15 @@
 					"file": "src/sy_configManager.cpp",
 					"settings":
 					{
-						"buffer_size": 5880,
+						"buffer_size": 6068,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4372,
-								4372
+								4074,
+								4074
 							]
 						],
 						"settings":
@@ -518,7 +534,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2973.0,
+						"translation.y": 2761.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -528,24 +544,25 @@
 					"file": "src/sy_netService.cpp",
 					"settings":
 					{
-						"buffer_size": 1807,
+						"buffer_size": 2141,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								428,
-								428
+								453,
+								453
 							]
 						],
 						"settings":
 						{
 							"is_xml": false,
-							"syntax": "Packages/C++/C++.tmLanguage"
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 381.0,
+						"translation.y": 11.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -555,15 +572,15 @@
 					"file": "inc/NetService/sy_netService.h",
 					"settings":
 					{
-						"buffer_size": 371,
+						"buffer_size": 377,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								50,
-								50
+								271,
+								271
 							]
 						],
 						"settings":
@@ -582,21 +599,22 @@
 					"file": "src/sy_netService.h",
 					"settings":
 					{
-						"buffer_size": 867,
+						"buffer_size": 888,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								674,
-								674
+								694,
+								694
 							]
 						],
 						"settings":
 						{
 							"is_xml": false,
-							"syntax": "Packages/C++/C++.tmLanguage"
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -609,20 +627,21 @@
 					"file": "inc/base/sy_net.h",
 					"settings":
 					{
-						"buffer_size": 602,
+						"buffer_size": 666,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								152,
-								152
+								627,
+								609
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C++.tmLanguage"
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -635,23 +654,24 @@
 					"file": "src/sy_net.cpp",
 					"settings":
 					{
-						"buffer_size": 534,
+						"buffer_size": 1109,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								184,
-								184
+								515,
+								515
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C++.tmLanguage"
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 74.0,
+						"translation.y": 183.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -668,8 +688,8 @@
 						"selection":
 						[
 							[
-								490,
-								490
+								903,
+								903
 							]
 						],
 						"settings":
@@ -677,7 +697,7 @@
 							"syntax": "Packages/Makefile/Makefile.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 54.0,
+						"translation.y": 69.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -687,15 +707,15 @@
 					"file": "inc/Manager/sy_configManager.h",
 					"settings":
 					{
-						"buffer_size": 1728,
+						"buffer_size": 1724,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								281,
-								281
+								200,
+								213
 							]
 						],
 						"settings":
@@ -704,7 +724,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 73.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -714,15 +734,15 @@
 					"file": "src/sy_configManager.h",
 					"settings":
 					{
-						"buffer_size": 1427,
+						"buffer_size": 1421,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1348,
-								1348
+								961,
+								961
 							]
 						],
 						"settings":
@@ -731,7 +751,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 314.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

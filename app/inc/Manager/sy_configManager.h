@@ -12,8 +12,8 @@ class ISetConfig
 {
 public:
 	virtual ~ISetConfig(){};
-	//char str[32];
-	virtual bool setConfig(const char* name, const CConfigTable& table) = 0;
+	char str[32];
+	virtual bool setConfig(const char* name, const CConfigTable& table){ std::cout << "it's father!\n" << std::endl;};
 };
 
 class IConfigManager

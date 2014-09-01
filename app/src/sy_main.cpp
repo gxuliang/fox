@@ -35,10 +35,15 @@ int main(int argc, char* argv[])
 	//ILog::instance();
 	INetRpc::instance()->start();
 		
+
+
 	IPrinter printOut = IPrinter(1, aConfig["PrinterOut"]);
 	gPrintOut = &printOut;
-	IPrinter printIn = IPrinter(0, aConfig["PrinterIn"], &printOut);//a=打印机输入，b=打印机输出
+
 	INetService::instance()->setConfig("NetService", aConfig["NetService"]);
+
+	IPrinter printIn = IPrinter(0, aConfig["PrinterIn"], &printOut);//a=打印机输入，b=打印机输出
+	
 	
 	infof("<%p>\n", INetService::instance());
 

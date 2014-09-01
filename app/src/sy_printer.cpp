@@ -1,6 +1,11 @@
+
+#include "base/sy_types.h"
+#include "NetService/sy_netService.h"
+
 #include "sy_printer.h"
 #include "base/sy_types.h"
 #include "base/sy_debug.h"
+
 
 const char PP[] = "/dev/pp";
 const char Welcome[] = "/******************************/\r\n/*****欢迎使用打印服务系统%(^&*())*****/\r\n";
@@ -48,7 +53,7 @@ IPrinter::IPrinter(int type, CConfigTable& tb,IPrinter* pPrinter):m_mutex(CMutex
 	}
 	else
 	{
-		this->pWriter = pPrinter;
+		this->pWriter = INetService::instance();
 	}
 	this->CreateThread();
 }
@@ -190,14 +195,16 @@ void IPrinter::ThreadProc()
 			//bzero(tmp, sizeof(tmp));
 			tracepoint();
 			int len = read(this->fd, tmp, sizeof(tmp));
-			debugf("read len = %d\n", len);
+			debugf("read len = %d, 1st is [%c]\n", len, tmp[0]);
 			if(len > 0)
 			{
-				while(this->pWriter->put(tmp, len) == false)
+				while(0)//(this->pWriter->write(tmp, len) == false)
 				{
-					tracepoint();
-					sleep(1);
+				//	tracepoint();
+				//	sleep(1);
 				}
+				infof("===%p===\n", this->pWriter);
+				this->pWriter->write(tmp, len);
 			}
 		}
 	}
@@ -219,6 +226,7 @@ void IPrinter::ThreadProc()
 					if((i+1) == send_len)
 						break;
 				}
+				infof("the len is %d\n", i+1);
 				len = write(this->fd, (const char*)tmp, i+1);
 				if(len != (i+1))
 				{

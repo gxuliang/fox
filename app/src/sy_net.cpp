@@ -19,16 +19,26 @@ MyClient::~MyClient()
 	close();
 }
 
-int MyClient::read(void* buf, int len)
+int MyClient::read(void* buf, int len, int timeout)
 {
 	int ret;
+	fd_set readfds;
 
-	ret = ::read(fd, buf, len);
+	FD_ZERO(&readfds);
+	FD_SET(fd, &readfds);
+	struct timeval overtime;
+	overtime.tv_sec = 0;
+	overtime.tv_usec = 1000*timeout;
+	ret = ::select(fd+1, &readfds, NULL, NULL, &overtime);
+	if(ret <= 0)
+		return ret;
+	else
+		ret = ::read(fd, buf, len);
 	return ret;
 }
 
 	
-int MyClient::write(void* buf, int len)
+int MyClient::write(const void* buf, int len)
 {
 	int ret;
 

@@ -6,6 +6,7 @@
 #include "base/sy_mutex.h"
 #include "sy_thread.h"
 #include "Manager/sy_configManager.h"
+#include "NetService/sy_netService.h"
 
 #define MAX_LEN (1024*2)
 class IPrinter : public CThread
@@ -36,7 +37,7 @@ private:
 	int mtype;//0-输入 1-输出
 
 	int fd;
-	IPrinter* pWriter;//给输入端口传毒输出指针
+	INetService* pWriter;//给输入端口传毒输出指针
 
 };
 

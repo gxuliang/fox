@@ -217,11 +217,13 @@ int CConfigManager::setConfig(const char* name, const CConfigTable& table, const
 	for(iter = svec.begin(); iter != svec.end(); iter++)
 	{
 		tracepoint();
-		//if(strcmp((*iter)->str, name) == 0)
+		infof("%p\n", *iter);
+		infof("str is [%s]\n", (*iter)->str);
+		if(strcmp((*iter)->str, name) == 0)
 		{
 			tracepoint();
 			infof("%p\n", *iter);
-			//(*iter)->setConfig(name, table[name]);
+			(*iter)->setConfig(name, m_configAll[name]);
 		}
 	}
 	//保存文件,优先处理延迟保存
@@ -238,16 +240,11 @@ int CConfigManager::setConfig(const char* name, const CConfigTable& table, const
 	return ret;
 }
 
-#include "base/sy_semaphore.h"
-
-#include "sy_printer.h"
-
-#include "sy_netService.h"
 
 void CConfigManager::reg(ISetConfig* p)
 {
-	infof("--------------%p---------------\n",dynamic_cast<CNetService*>(p));
-	svec.push_back(dynamic_cast<CNetService*>(p));
+	infof("--------------%p----------%s-----\n",p, p->str);
+	svec.push_back((ISetConfig*)p);
 }
 
 void CConfigManager::saveFile()

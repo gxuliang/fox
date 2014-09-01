@@ -11,8 +11,11 @@
 #include "base/sy_guard.h"
 #include "sy_printer.h"
 #include "sy_netService.h"
+#include "sy_printer.h"
 
 
+
+extern IPrinter *gPrintOut;
 
 PATTERN_SINGLETON_IMPLEMENT(CNetService)
 
@@ -26,7 +29,9 @@ CNetService::CNetService()
 	loopflag = false;
 	mPrinter = NULL;
 	infof("000000000000000[%p]\n", this);
+	strncpy(this->str, "abcd", sizeof(str));
 	IConfigManager::instance()->reg(this);
+	this->reg(gPrintOut);
 }
 
 bool CNetService::reg(IPrinter* p)
@@ -39,8 +44,8 @@ bool CNetService::setConfig(const char* name, const CConfigTable& table)
 {
 	ipaddr = table["ipaddr"].asString();
 	port = table["port"].asUInt();
-	//strncpy(str, name, sizeof(str));
-	infof("name is [%s], ip = [%s], port = %d\n", name, ipaddr.c_str(), port);
+	strncpy(this->str, name, sizeof(str));
+	infof("[%p],name is [%s], ip = [%s], port = %d\n", this, this->str, ipaddr.c_str(), port);
 	restart();
 	return true;
 }
@@ -55,6 +60,11 @@ bool CNetService::getState(CConfigTable& table)
 bool CNetService::stop()
 {
 	loopflag = false;
+	if(sock != NULL)
+	{
+		delete sock;
+		sock = NULL;
+	}
 	infof("CNetService::stopping...\n");
 	sem.Pend();	
 	infof("CNetService::stop ok!\n");
@@ -93,17 +103,22 @@ void CNetService::ThreadProc()
 			if(sock->connect(ipaddr.c_str(), port) == false)
 			{
 				sock->perror("connect");
-				sleep(1);
+				sleep(2);
 				continue;
 			}
 		}
 
 			int len = sock->read(buf, BUF_MAX);
-			infof("read network data len = %d\n", len);
-			if(len <= 0)
+			if(len > 0)
+				infof("read network data len = %d\n", len);
+			if(len < 0)
 			{
 				errorf("net ill, reconnect!\n");
 				sock->close();
+				continue;
+			}
+			else if(len == 0)
+			{
 				continue;
 			}
 			while(mPrinter->put(buf, len) == false)
@@ -114,12 +129,24 @@ void CNetService::ThreadProc()
 		
 
 	}
-
-	delete sock;
+	tracepoint();
+	if(sock != NULL)
+	{
+		delete sock;
+		sock == NULL;
+	}
 	delete []buf;
-	sock == NULL;
 	sem.Post();
 }
+
+int CNetService::write(const char* buf, int len)
+{
+	if(sock == NULL)
+		return -1;
+
+	return sock->write(buf, len);
+}
+
 
 INetService *INetService::instance()
 {

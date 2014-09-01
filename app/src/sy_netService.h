@@ -29,6 +29,8 @@ public:
 	bool setConfig(const char* name,const CConfigTable& table);//设置后自动生效
 	bool getState(CConfigTable& table);//获取连接状态
 	bool reg(IPrinter* p);
+	int write(const char*, int);
+
 
 private:
 	bool start();

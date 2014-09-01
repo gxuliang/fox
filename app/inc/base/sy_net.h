@@ -13,8 +13,8 @@ class MySock
 {
 public:
 	virtual ~MySock(){};
-	virtual int read(void* , int ) = 0;
-	virtual int write(void* , int ) = 0;
+	virtual int read(void* , int , int tm = 0) = 0;
+	virtual int write(const void* , int ) = 0;
 	virtual void perror(const char* info) = 0;
 	virtual	bool close() = 0;
 };
@@ -31,8 +31,8 @@ public:
 	MyClient();
 	~MyClient();
 	bool connect(const char* ip, const ushort port);
-	int read(void* , int );
-	int write(void* , int );
+	int read(void* , int , int tm = 0);
+	int write(const void* , int );
 	bool close();
 	void perror(const char* info);
 	bool conn_flag;
