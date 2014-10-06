@@ -20,6 +20,15 @@ public:
 
 };
 
+class ICtlNetService
+{
+public:
+	static ICtlNetService *instance();
+	virtual ~ICtlNetService(){};
+	virtual bool setConfig(const char* name, const CConfigTable& table) = 0;//设置后自动生效
+	virtual bool getState(CConfigTable& table) = 0;//获取连接状态
+	virtual int write(const char*, int) = 0;
 
+};
 
  #endif

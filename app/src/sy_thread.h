@@ -12,9 +12,12 @@ public:
 	CThread();
 	~CThread();
 	bool CreateThread();
+	bool CloseTread();
 
 	virtual void ThreadProc() = 0;
 
+private:
+	pthread_t tid;
 
 	
 };

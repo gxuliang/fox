@@ -16,6 +16,7 @@
 #include "base/sy_mutex.h"
 #include "base/sy_singletion.h"
 #include "Manager/sy_configManager.h"
+#include "sy_thread.h"
 
 
 #ifndef WIN32
@@ -27,7 +28,7 @@ typedef Json::Reader CConfigReader;
 
 bool copyFile(const char* from, const char* to);
 
-class CConfigManager : public IConfigManager
+class CConfigManager : public IConfigManager, public CThread
 {
 	PATTERN_SINGLETON_DECLARE(CConfigManager)
 public:
@@ -47,6 +48,8 @@ public:
 private:
 	bool readConfig(const char* path, std::string& input);
 	void makedefault(void);
+	void ThreadProc();
+
 
 private:
 	static std::string m_mainFilePath;
@@ -62,6 +65,7 @@ private:
 
 	std::vector<ISetConfig*> svec;
 	std::vector<ISetConfig*>::iterator iter;
+	int fd[2];
 };
 
 

@@ -6,6 +6,7 @@
  */
 
 #include "base/sy_types.h"
+#include "base/sy_debug.h"
 #include "base/sy_net.h"
 
 MyClient::MyClient()
@@ -29,11 +30,16 @@ int MyClient::read(void* buf, int len, int timeout)
 	struct timeval overtime;
 	overtime.tv_sec = 0;
 	overtime.tv_usec = 1000*timeout;
-	ret = ::select(fd+1, &readfds, NULL, NULL, &overtime);
+	if(timeout == 0)
+	{
+		ret = ::select(fd+1, &readfds, NULL, NULL, NULL);
+	}
+	else
+		ret = ::select(fd+1, &readfds, NULL, NULL, &overtime);
 	if(ret <= 0)
 		return ret;
 	else
-		ret = ::read(fd, buf, len);
+		ret = ::recv(fd, buf, len, 0);
 	return ret;
 }
 
@@ -49,10 +55,13 @@ int MyClient::write(const void* buf, int len)
 bool MyClient::close()
 {
 	bool ret = false;
-
+	std::cout << "111:" << fd << std::endl;
 	if(::close(fd) == 0)
+	{
+		std::cout << "222" << std::endl;
 		ret = true;
-
+	}
+	std::cout << "333" << std::endl;
 	conn_flag = false;
 	return ret;
 }
@@ -66,6 +75,8 @@ bool MyClient::connect(const char* ip, const ushort port)
 		perror("socket");
 		return false;
 	}
+
+	debugf("fd = %d\n", fd);
 	::bzero(&addr, sizeof(struct sockaddr_in));
 	addrlen = sizeof(struct sockaddr);
 	addr.sin_family = AF_INET;
@@ -84,6 +95,6 @@ bool MyClient::connect(const char* ip, const ushort port)
 	
 void MyClient::perror(const char* info)
 {
-	std::cout << "111" << std::endl;
+	//std::cout << "111" << std::endl;
 	::perror(info);
 }

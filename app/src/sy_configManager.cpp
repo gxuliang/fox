@@ -47,23 +47,27 @@ CConfigManager::CConfigManager() : m_mutex(CMutex::mutexRecursive)
 	}
 
 	if (readConfig(m_mainFilePath.c_str(), m_stream))
+	{
+		if(reader.parse(m_stream, m_configAll))
 		{
-			if(reader.parse(m_stream, m_configAll))
-			{
-				tracepoint();
-				std::cout << m_configAll << std::endl;
-			}
-			else
-			{
-				errorf("read config failed,use default!\n");
-				makedefault();
-			}
+			tracepoint();
+			std::cout << m_configAll << std::endl;
 		}
 		else
 		{
-			infof("not found config,using default!");
+			errorf("read config failed,use default!\n");
 			makedefault();
 		}
+	}
+	else
+	{
+		infof("not found config,using default!");
+		makedefault();
+	}
+
+	pipe(fd);
+	this->CreateThread();
+
 }
 
 
@@ -213,6 +217,9 @@ int CConfigManager::setConfig(const char* name, const CConfigTable& table, const
 	saveFile();
 	m_mutex.Leave();
 
+	write(fd[1], name, strlen(name));
+
+/*
 	infof("+++++++++++++++++++++++++++\n");
 	for(iter = svec.begin(); iter != svec.end(); iter++)
 	{
@@ -226,6 +233,8 @@ int CConfigManager::setConfig(const char* name, const CConfigTable& table, const
 			(*iter)->setConfig(name, m_configAll[name]);
 		}
 	}
+	*/
+
 	//保存文件,优先处理延迟保存
 	//if (!(ret & applyDelaySave))
 	//{
@@ -238,6 +247,31 @@ int CConfigManager::setConfig(const char* name, const CConfigTable& table, const
 	}
 */
 	return ret;
+}
+
+void CConfigManager::ThreadProc()
+{
+	int ret;
+	char name[32]="";
+	while(1)
+	{
+		bzero(name, 32);
+		ret = read(fd[0], name,32);
+		sleep(1);
+		infof("+++++++++++++++++++++++++++\n");
+		for(iter = svec.begin(); iter != svec.end(); iter++)
+		{
+			tracepoint();
+			infof("%p\n", *iter);
+			infof("str is [%s]\n", (*iter)->str);
+			if(strcmp((*iter)->str, name) == 0)
+			{
+				tracepoint();
+				infof("%p\n", *iter);
+				(*iter)->setConfig(name, m_configAll[name]);
+			}
+		}
+	}
 }
 
 

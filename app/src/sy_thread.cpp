@@ -24,7 +24,6 @@ CThread::~CThread()
 bool CThread::CreateThread()
 {
 	int err = 0;
-	pthread_t tid;
 	err = pthread_create(&tid, NULL, ThreadBody, this);
 	if(err != 0)
 	{
@@ -33,4 +32,9 @@ bool CThread::CreateThread()
 	}
 	infof("create thread ok!\n");
 	return true;
+}
+
+bool CThread::CloseTread()
+{
+	pthread_cancel(tid);
 }

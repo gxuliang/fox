@@ -115,8 +115,10 @@ bool SYRpc::CgetConfig(const Json::Value& root, Json::Value& response)
 }
 
 #include "sy_printer.h"
+#include "sy_upgrade.h"
 
 extern IPrinter *gPrintOut;
+extern IUpgrade *gUpgrade;
 bool SYRpc::getState(const Json::Value& root, Json::Value& response)
 {
 	CConfigTable table;
@@ -172,7 +174,14 @@ bool SYRpc::SendCmd(const Json::Value& root, Json::Value& response)
 		response["result"] = "true";
 		std::cout << "ans " << response << std::endl;
 	}
-	
+	else if(root["params"]["name"] == "UpgradeFile")
+	{
+		std::string file;
+		file = root["params"]["data"].asString();
+		gUpgrade->putfile(file.c_str());
+		response["result"] = "true";
+		std::cout << "ans " << response << std::endl;
+	}
 
 	return true;
 
@@ -293,12 +302,32 @@ bool SYRpc::CsetConfig(const Json::Value& root, Json::Value& response)
 	{
 		response["result"] = "false";
 	}
+	//response = Json::Value::null;
+
 	return true;
 }
 
 bool SYRpc::CgetDefault(const Json::Value& root, Json::Value& response)
 {
+	CConfigTable table;
+	std::cout << "Receive query: " << root["params"]["name"] << std::endl;
+	std::string name;
+	name = root["params"]["name"].asString();
+	infof("%s", name.c_str());
+	response["id"] = root["id"];
+	bool ret = IConfigManager::instance()->getDefault(name.c_str(), table);
+	if(ret)
+	{
+		response["result"] = "true";
+		response["params"][name] = table;
+		std::cout << "ans " << response << std::endl;
+	}
+	else
+	{
+		response["result"] = "false";
+	}
 
+	return true;
 }
 
 bool SYRpc::CsetDefault(const Json::Value& root, Json::Value& response)
