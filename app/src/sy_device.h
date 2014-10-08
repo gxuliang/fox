@@ -20,8 +20,9 @@
 #include "Manager/sy_configManager.h"
 #include "sy_thread.h"
 
+#define MAX_LED_NUM 5
 
-class CDevice : public IDevice, public ISetConfig
+class CDevice : public IDevice, public ISetConfig, public CThread
 {
 public:
 	PATTERN_SINGLETON_DECLARE(CDevice)
@@ -32,12 +33,15 @@ public:
 	bool setLed(LED_NAME nm, int state);
 
 private:
+	bool in_setLed(LED_NAME nm, int state);
 	bool setNetWork(const CConfigTable& table);
 	bool setsth(const char* name, const CConfigTable& table);
 	bool setgateway(const CConfigTable& table); 
+	void ThreadProc();
 
 	int fd;   
-
+	int msetLed[MAX_LED_NUM];
+	int msetLedStat[MAX_LED_NUM];
 };
 
 #endif

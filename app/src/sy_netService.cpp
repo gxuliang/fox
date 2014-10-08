@@ -109,15 +109,15 @@ void CNetService::ThreadProc()
 		{	
 			if(sock->connect(ipaddr.c_str(), port) == false)
 			{
-				ctl_state = (ctl_state + 1) & 0x01;
-				IDevice::instance()->setLed(IDevice::LED_CONN, ctl_state);
+				//ctl_state = (ctl_state + 1) & 0x01;
+				IDevice::instance()->setLed(IDevice::LED_CONN, 2);
 				sock->perror("CNetService::connect");
 				sleep(2);
 				continue;
 			}
 		}
 
-		IDevice::instance()->setLed(IDevice::LED_CONN, 0);
+		IDevice::instance()->setLed(IDevice::LED_CONN, 1);
 
 		int len = sock->read(buf, BUF_MAX);
 		if(len > 0)
@@ -383,7 +383,7 @@ bool CProtocol::enableAlarm(ICtlNetService* p, uchar type)
 	infof("CProtocol::enableAlarm\n");
 	if(type == 0x00)
 	{
-		IDevice::instance()->setLed(IDevice::LED_ALARM, 1);
+		IDevice::instance()->setLed(IDevice::LED_ALARM, 2);
 		psendbuf[HEAD_LEN] = 2;
 		psendbuf[HEAD_LEN+1] = 0x01;
 		psendbuf[HEAD_LEN+2] = 0x06;

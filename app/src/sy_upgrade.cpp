@@ -4,6 +4,7 @@
 #include "Manager/sy_file.h"
 
 #include "sy_configManager.h"
+#include "Device/sy_device.h"
 
 #include "sy_upgrade.h"
 
@@ -40,6 +41,7 @@ bool IUpgrade::putfile(const char* file)
 
 	std::string input="";
 	
+	IDevice::instance()->setLed(IDevice::LED_UPDATE, 2);
 
 	while (1)
 	{
@@ -85,7 +87,7 @@ bool IUpgrade::putfile(const char* file)
 
 	return true;
 
-
+#if 0
 	if((fp = popen("umount /app", "r")) == NULL)
 		return false;
 	
@@ -114,4 +116,5 @@ bool IUpgrade::putfile(const char* file)
 
 	system("reboot");
 	return true;
+#endif
 }

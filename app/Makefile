@@ -51,6 +51,7 @@ $(OBJ)%.o: $(SRC)/%.cpp
 default:	$(OBJS)
 	$(GCC) -O0 -o $(EXEC) $(OBJS) $(LIBS) -lpthread 
 	cp $(EXEC) ~/sybin/app
+	cp $(EXEC) ~/pack/Images/user/bin/app
 	
 clean:
 	rm -rf $(EXEC) $(OBJ)*.o

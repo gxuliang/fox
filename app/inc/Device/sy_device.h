@@ -13,10 +13,11 @@ class IDevice
 {
 public:
 	enum LED_NAME
-	{  
-		LED_BOOT = 1,
+	{  //１报警双色，２启动，３连接，４升级，５给驱动用
+		LED_ALARM = 0,
+		LED_BOOT	,
 		LED_CONN	,
-		LED_ALARM	,
+		LED_UPDATE	,
 	};
 	static IDevice *instance();
 	virtual ~IDevice(){};

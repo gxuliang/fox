@@ -14,6 +14,7 @@
 #include "sy_device.h"
 #include "sy_printer.h"
 
+#include "NetService/sy_netService.h"
 
 #include "stdio.h"
 #include "stdlib.h"
@@ -36,7 +37,7 @@ const char* dev="eth0";
 #define PP_IOCTL_LED_4_CTL		_IOW(PP_CMD_MAGIC,3,int)
 #define PP_IOCTL_LED_5_CTL		_IOW(PP_CMD_MAGIC,4,int)
 #define PP_IOCTL_LED_6_CTL		_IOW(PP_CMD_MAGIC,5,int)
-#define PP_IOCTL_BUZZ_CTL			_IOW(PP_CMD_MAGIC,6,int)
+#define PP_IOCTL_BUZZ_CTL		_IOW(PP_CMD_MAGIC,6,int)
 #define PP_IOCTL_IP175C_CTL		_IOW(PP_CMD_MAGIC,8,int)
 #define PP_IOCTL_GET_POS_STATUS	_IOW(PP_CMD_MAGIC,9,int)
 #define PP_IOCTL_SET_PC_STATUS	_IOW(PP_CMD_MAGIC,10,int)
@@ -71,26 +72,65 @@ CDevice::CDevice()
 	ioctl(fd, PP_IOCTL_LED_6_CTL, &ctl_data);//5红色
 	///ioctl(fd, PP_IOCTL_BUZZ_CTL, &ctl_data);
 
+	for(int i = 0 ; i < MAX_LED_NUM; i++)
+	{
+		msetLed[i] = 0;
+		msetLedStat[i] = 0;
+	}
 
+	this->CreateThread();
+}
+
+void CDevice::ThreadProc()
+{
+	int i;
+	while(1)
+	{
+		for(i=0;i<MAX_LED_NUM;i++)
+		{
+			switch(msetLed[i])
+			{
+				case 0://灭
+				case 1://亮
+					in_setLed((LED_NAME)i, msetLed[i]);
+					break;
+				case 2://闪烁
+					in_setLed((LED_NAME)i, msetLedStat[i]);
+					//infof("msetLedStat[%d] = %d\n", i, msetLedStat[i]);
+					msetLedStat[i]=(msetLedStat[i]+1) & 0x01;
+					break;
+				default:break;
+			}
+		}
+		usleep(500000);
+	}
 }
 
 bool CDevice::setLed(LED_NAME nm, int state)
 {
+	msetLed[nm] = state;
+	infof("msetLed[%d] = %d\n", nm, msetLed[nm]);
+	return true;
+}
+
+bool CDevice::in_setLed(LED_NAME nm, int state)
+{
 	int ctl_data;
 	switch(nm)
 	{
-		case LED_BOOT://启动，5号灯亮绿色；升级，黄色，未启动，红色
-			ctl_data = 0;
-			ioctl(fd, PP_IOCTL_LED_5_CTL, &ctl_data);//5绿色
-			ctl_data = 1;
-			ioctl(fd, PP_IOCTL_LED_6_CTL, &ctl_data);
+		case LED_ALARM://１报警双色，２启动，３连接，４升级，５给驱动用
+			ioctl(fd, PP_IOCTL_LED_5_CTL, &state);
+			ioctl(fd, PP_IOCTL_LED_6_CTL, &state);
+			ioctl(fd, PP_IOCTL_BUZZ_CTL, &state);
+			//infof("state = %d\n", state);
 			break;
-		case LED_CONN:
+		case LED_BOOT:
 			ioctl(fd, PP_IOCTL_LED_4_CTL, &state);
 			break;
-		case LED_ALARM:
-			state = !state;
+		case LED_CONN:
 			ioctl(fd, PP_IOCTL_LED_3_CTL, &state);
+		case LED_UPDATE:
+			ioctl(fd, PP_IOCTL_LED_2_CTL, &state);
 			break;
 		default:break;
 
@@ -137,7 +177,11 @@ bool CDevice::setNetWork(const CConfigTable& table)
 			return false;
 		if(this->setgateway(table["gateway"]) == false)
 			return false;
-
+		//INetService::instance()->restart();
+		//ICtlNetService::instance()->restart();
+		infof("+++++++++++++++++++++\n");
+		//sleep(3);
+		system("reboot");
 		return true;
 	}
 	else

@@ -34,12 +34,12 @@ public:
 	bool getState(CConfigTable& table);//获取连接状态
 	bool reg(IPrinter* p);
 	int write(const char*, int);
+	bool restart();
 
 
 private:
 	bool start();
 	bool stop();
-	bool restart();
 	void ThreadProc();
 	std::string ipaddr;
 	ushort port;
@@ -59,12 +59,12 @@ public:
 	bool getState(CConfigTable& table);//获取连接状态
 	bool reg(IPrinter* p);
 	int write(const char*, int);
+	bool restart();
 
 
 private:
 	bool start();
 	bool stop();
-	bool restart();
 	void ThreadProc();
 	std::string ipaddr;
 	ushort port;

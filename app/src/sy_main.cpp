@@ -24,7 +24,7 @@ IPrinter *gPrintOut=NULL;
 //IPrinter gPrintOut;
 IUpgrade *gUpgrade;
 
-
+void rewrite_software();
 int main(int argc, char* argv[])
 {
 	infof("app start!\n");
@@ -33,12 +33,13 @@ int main(int argc, char* argv[])
 	IConfigManager::instance()->getConfig("All", aConfig);
 	IDevice::instance()->setConfig1("tcp-ip", aConfig["tcp-ip"]);
 	IConfigManager::instance()->setConfig("tcp-ip", aConfig["tcp-ip"]);//用于把实际mac地址回写入配置
+	rewrite_software();
 	IUser::instance();
 	//ILog::instance();
 	INetRpc::instance()->start();
 		
 	gUpgrade = new IUpgrade(); 
-	IDevice::instance()->setLed(IDevice::LED_BOOT, 1);
+	IDevice::instance()->setLed(IDevice::LED_BOOT, 2);
 	while(0)
 	{
 		sleep(1);
@@ -61,4 +62,25 @@ int main(int argc, char* argv[])
 	sem.Pend();
 
 	return 0;
+}
+void rewrite_software()
+{
+	FILE* fp;
+	if((fp = popen("sh /app/bin/ver", "r")) == NULL)
+		return;
+
+	char buf[128]="";
+	fgets(buf, sizeof(buf), fp);
+	pclose(fp);
+	for(int i=0;i<128;i++)
+	{
+		if(buf[i]=='\n')
+			buf[i]='\0';
+	}
+	infof("ver is [%s]\n", buf);
+	CConfigTable aConfig;
+	IConfigManager::instance()->getConfig("All", aConfig);
+	std::string ver = buf;
+	aConfig["base"]["sw"] = ver;
+	IConfigManager::instance()->setConfig("base", aConfig["base"]);
 }
