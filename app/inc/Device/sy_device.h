@@ -28,6 +28,8 @@ public:
 
 	virtual bool setLed(LED_NAME nm, int state) = 0;
 
+	virtual 	int get_tx_status(int* p) =0;
+
 };
 
 

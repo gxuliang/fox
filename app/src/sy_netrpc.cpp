@@ -25,7 +25,7 @@ CNetRpc::CNetRpc() : server(std::string("127.0.0.1"), 8086)
 {
 	m_run = false;
 
-
+	infof("starting-------------\n");
 
 	if(!networking::init())
 	{

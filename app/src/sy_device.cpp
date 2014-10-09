@@ -24,6 +24,7 @@
 #include "arpa/inet.h"
 #include "linux/sockios.h"
 
+
 const char PP[] = "/dev/pp";
 
 
@@ -63,15 +64,15 @@ CDevice::CDevice()
 	}
 	infof("fd = %d\n", this->fd);
 
-	int ctl_data = 1;//关闭所有指示灯
-	///ioctl(fd, PP_IOCTL_LED_1_CTL, &ctl_data);
+	int ctl_data = 0;//关闭所有指示灯
+	//ioctl(fd, PP_IOCTL_LED_1_CTL, &ctl_data);
 	ioctl(fd, PP_IOCTL_LED_2_CTL, &ctl_data);//2
 	ioctl(fd, PP_IOCTL_LED_3_CTL, &ctl_data);//3
 	ioctl(fd, PP_IOCTL_LED_4_CTL, &ctl_data);//4
 	ioctl(fd, PP_IOCTL_LED_5_CTL, &ctl_data);//5绿色
 	ioctl(fd, PP_IOCTL_LED_6_CTL, &ctl_data);//5红色
-	///ioctl(fd, PP_IOCTL_BUZZ_CTL, &ctl_data);
-
+	ioctl(fd, PP_IOCTL_BUZZ_CTL, &ctl_data);
+	//while(1);
 	for(int i = 0 ; i < MAX_LED_NUM; i++)
 	{
 		msetLed[i] = 0;
@@ -106,6 +107,14 @@ void CDevice::ThreadProc()
 	}
 }
 
+int CDevice::get_tx_status(int* p)
+{
+
+	ioctl(fd, PP_IOCTL_GET_TX_STATUS, &buf_status);
+	p = buf_status.buf;
+	return buf_status.buf_length;
+
+}
 bool CDevice::setLed(LED_NAME nm, int state)
 {
 	msetLed[nm] = state;
@@ -171,17 +180,22 @@ bool CDevice::setNetWork(const CConfigTable& table)
 	std::string mode = table["mode"].asCString();
 	if(mode == "static")
 	{
+		tracepoint();
+		
 		if(this->setsth("ip", table["ip"]) == false)
 			return false;
 		if(this->setsth("netmask", table["netmask"]) == false)
 			return false;
 		if(this->setgateway(table["gateway"]) == false)
 			return false;
-		//INetService::instance()->restart();
-		//ICtlNetService::instance()->restart();
-		infof("+++++++++++++++++++++\n");
+		INetService::instance()->restart();
+		ICtlNetService::instance()->restart();
+		tracepoint();
+		//infof("-------------------------\n");
 		//sleep(3);
-		system("reboot");
+		//reboot(LINUX_REBOOT_CMD_RESTART);
+
+		//system("reboot");
 		return true;
 	}
 	else
@@ -306,7 +320,7 @@ bool CDevice::setgateway(const CConfigTable& table)
 
 	close(skfd);    
 
-	return true?false:(err>=0);    
+	return true;    
 }    
 
 bool CDevice::getMAC(char* hd)  

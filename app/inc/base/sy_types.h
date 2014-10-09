@@ -37,7 +37,7 @@
 #include <sys/types.h>
 //#include <sys/io.h>
 #include <sys/sendfile.h>
-
+#include<linux/reboot.h>
 /*! other interfaces */
 #include <time.h>
 #include <string.h>

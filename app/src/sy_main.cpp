@@ -28,6 +28,7 @@ void rewrite_software();
 int main(int argc, char* argv[])
 {
 	infof("app start!\n");
+	INetRpc::instance()->start();
 	CConfigTable aConfig;
 	IConfigManager::config(mainPath, defaultPath);
 	IConfigManager::instance()->getConfig("All", aConfig);
@@ -36,7 +37,6 @@ int main(int argc, char* argv[])
 	rewrite_software();
 	IUser::instance();
 	//ILog::instance();
-	INetRpc::instance()->start();
 		
 	gUpgrade = new IUpgrade(); 
 	IDevice::instance()->setLed(IDevice::LED_BOOT, 2);
@@ -48,8 +48,9 @@ int main(int argc, char* argv[])
 	IPrinter printOut = IPrinter(1, aConfig["PrinterOut"]);
 	gPrintOut = &printOut;
 
+
 	INetService::instance()->setConfig("NetService", aConfig["NetService"]);
-		tracepoint();
+	tracepoint();
 	ICtlNetService::instance()->setConfig("NetService", aConfig["NetService"]);
 	tracepoint();
 

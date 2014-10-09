@@ -28,21 +28,24 @@ CNetService::~CNetService()
 CNetService::CNetService()
 {
 	loopflag = false;
-	mPrinter = NULL;
+	//mPrinter = NULL;
 	infof("000000000000000[%p]\n", this);
 	strncpy(this->str, "NetService", sizeof(str));
 	IConfigManager::instance()->reg(this);
-	this->reg(gPrintOut);
+	//warnf("=======++===%p======\n", gPrintOut);
+	//this->reg(gPrintOut);
 }
 
 bool CNetService::reg(IPrinter* p)
 {
 	mPrinter = p;
+	warnf("==========%p===%p===\n", mPrinter,p);
 	return true;
 }
 
 bool CNetService::setConfig(const char* name, const CConfigTable& table) 
 {
+	this->reg(gPrintOut);
 	ipaddr = table["ipaddr"].asString();
 	//port = table["port"].asUInt();
 	port = 1001;
@@ -117,13 +120,14 @@ void CNetService::ThreadProc()
 			}
 		}
 
-		IDevice::instance()->setLed(IDevice::LED_CONN, 1);
+		IDevice::instance()->setLed(IDevice::LED_CONN, 0);
 
 		int len = sock->read(buf, BUF_MAX);
 		if(len > 0)
 		{
 			infof("read network data len = %d\n", len);
-			debugf("[%s]\n", buf);
+			debugf("[%c]----%p--%p\n", buf[0],mPrinter,gPrintOut);
+
 			while(mPrinter->put(buf, len) == false)
 			{
 				errorf("buf is full,try it again after 1sc...\n");
@@ -267,12 +271,14 @@ void CCtlNetService::ThreadProc()
 		{	
 			if(sock->connect(ipaddr.c_str(), port) == false)
 			{
+				IDevice::instance()->setLed(IDevice::LED_ALARM, 1);
 				sock->perror("CCtlNetService::connect");
 				sleep(2);
 				continue;
 			}
 		}
 
+			IDevice::instance()->setLed(IDevice::LED_ALARM, 0);
 			int len = sock->read(buf, BUF_MAX);
 			if(len > 0)
 			{
@@ -380,9 +386,9 @@ bool CProtocol::deal(ICtlNetService* p, char* buf)
 }
 bool CProtocol::enableAlarm(ICtlNetService* p, uchar type)
 {
-	infof("CProtocol::enableAlarm\n");
 	if(type == 0x00)
 	{
+		infof("CProtocol::enableAlarm\n");
 		IDevice::instance()->setLed(IDevice::LED_ALARM, 2);
 		psendbuf[HEAD_LEN] = 2;
 		psendbuf[HEAD_LEN+1] = 0x01;
@@ -395,9 +401,9 @@ bool CProtocol::enableAlarm(ICtlNetService* p, uchar type)
 }
 bool CProtocol::disableAlarm(ICtlNetService* p, uchar type)
 {
-	infof("CProtocol::enableAlarm\n");
 	if(type == 0x00)
 	{
+		infof("CProtocol::disableAlarm\n");
 		IDevice::instance()->setLed(IDevice::LED_ALARM, 0);
 		psendbuf[HEAD_LEN] = 2;
 		psendbuf[HEAD_LEN+1] = 0x01;

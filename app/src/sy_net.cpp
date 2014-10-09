@@ -25,6 +25,9 @@ int MyClient::read(void* buf, int len, int timeout)
 	int ret;
 	fd_set readfds;
 
+	if(fd <=0 || conn_flag == false)
+		return false;
+
 	FD_ZERO(&readfds);
 	FD_SET(fd, &readfds);
 	struct timeval overtime;
@@ -47,6 +50,9 @@ int MyClient::read(void* buf, int len, int timeout)
 int MyClient::write(const void* buf, int len)
 {
 	int ret;
+	warnf("fd = %d\n", fd);
+	if(fd <=0 || conn_flag == false)
+		return false;
 
 	ret = ::write(fd, buf, len);
 	return ret;

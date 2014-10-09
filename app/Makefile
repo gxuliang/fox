@@ -49,7 +49,7 @@ $(OBJ)%.o: $(SRC)/%.cpp
 	$(GCC) -g -I$(INC) -I$(COM_INC) -c -o $(OBJ)$*.o $<
 	
 default:	$(OBJS)
-	$(GCC) -O0 -o $(EXEC) $(OBJS) $(LIBS) -lpthread 
+	$(GCC) -g -O0 -o $(EXEC) $(OBJS) $(LIBS) -lpthread 
 	cp $(EXEC) ~/sybin/app
 	cp $(EXEC) ~/pack/Images/user/bin/app
 	

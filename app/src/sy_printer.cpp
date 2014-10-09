@@ -5,6 +5,7 @@
 #include "sy_printer.h"
 #include "base/sy_types.h"
 #include "base/sy_debug.h"
+#include "Device/sy_device.h"
 
 
 const char PP[] = "/dev/pp";
@@ -29,6 +30,7 @@ IPrinter::IPrinter(int type, CConfigTable& tb,IPrinter* pPrinter):m_mutex(CMutex
 	}
 	if(this->mtype == 1)//测试的是输出打印机
 	{
+		//write(this->fd, Welcome, 3);
 		//if(tb["welcomeauto"].asString() == "wyes")
 		//	this->put(Welcome, sizeof(Welcome));
 
@@ -122,6 +124,22 @@ bool IPrinter::putfile(const char* file)
 }
 bool IPrinter::put(const char* dat,int len)
 {
+	int res = 0,i=0;
+	//tracepoint();
+	//infof("buf[0] = %c, len = %d, fd = %d\n", dat[0], len, fd);
+	//sleep(1);
+	//write(fd, dat, 1);
+	tracepoint();
+	while(i < len)
+	{
+		infof("buf[0] = %c, len = %d\n", dat[0], len);
+		res = write(this->fd, &dat[i], len-i);
+		i += res;
+		//infof("res = %d\n", res);
+	}
+
+	return true;
+#if 0
 	if(this->left() < len || len == 0)
 	{
 		return false;
@@ -143,6 +161,7 @@ bool IPrinter::put(const char* dat,int len)
 	}
 		
 	return true;
+#endif
 }
 
 int IPrinter::left(void)
@@ -164,6 +183,12 @@ int IPrinter::left(void)
 
 int IPrinter::showbuf(char* dat, int len)
 {
+	int length, *p;
+	length = IDevice::instance()->get_tx_status(p);
+	infof("len = %d\n", length);
+	dat = (char*)p;
+	return length;
+	#if 0
 	int i = 0;
 	if (dat == NULL || (this->wr == this->rd && this->fullflag==false))
 		return 0;
@@ -177,6 +202,7 @@ int IPrinter::showbuf(char* dat, int len)
 		dat[i]= this->cbuf[this->rd+i & (MAX_LEN -1)];
 	}
 	return i;
+	#endif
 
 }
 
@@ -184,7 +210,7 @@ static char tmp[2048];
 
 void IPrinter::ThreadProc()
 {
-	int i;
+	int i=0;
 	if(this->mtype == 0)//输入，需要读取输入打印机数据和状态
 	{
 		char tmp[128]="";
@@ -203,8 +229,11 @@ void IPrinter::ThreadProc()
 				//	tracepoint();
 				//	sleep(1);
 				}
-				infof("===%p===\n", this->pWriter);
+				infof("===%p==%d=\n", this->pWriter,i++);
 				this->pWriter->write(tmp, len);
+				tracepoint();
+
+				usleep(500000);
 			}
 		}
 	}
@@ -215,6 +244,7 @@ void IPrinter::ThreadProc()
 			//tracepoint();
 			while(this->mtype == 1 &&  this->loopflag && this->left() < MAX_LEN)
 			{
+				#if 0
 				tracepoint();
 				int send_len = MAX_LEN - this->left();
 				//printf("%c", this->cbuf[this->rd]);
@@ -239,6 +269,7 @@ void IPrinter::ThreadProc()
 				this->fullflag=false;// 待加锁处理
 				m_mutex.Leave();
 				//usleep(1000*1000);//测试代码
+				#endif
 			}
 			//读取数据
 			sleep(1);

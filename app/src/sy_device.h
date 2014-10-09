@@ -22,6 +22,12 @@
 
 #define MAX_LED_NUM 5
 
+typedef struct tag_buf_status_t 
+{ 
+	int buf_length;
+	int buf[2048];
+}buf_status_t;
+
 class CDevice : public IDevice, public ISetConfig, public CThread
 {
 public:
@@ -31,6 +37,7 @@ public:
 	bool setConfig1(const char* name, CConfigTable& table);
 	bool getMAC(char* hd);
 	bool setLed(LED_NAME nm, int state);
+	int get_tx_status(int* p);
 
 private:
 	bool in_setLed(LED_NAME nm, int state);
@@ -39,9 +46,11 @@ private:
 	bool setgateway(const CConfigTable& table); 
 	void ThreadProc();
 
+
 	int fd;   
 	int msetLed[MAX_LED_NUM];
 	int msetLedStat[MAX_LED_NUM];
+	buf_status_t buf_status;
 };
 
 #endif
