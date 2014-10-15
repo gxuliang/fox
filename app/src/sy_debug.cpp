@@ -44,9 +44,9 @@
 	 if(szcontent[strlen(szcontent) - 1] == '\n')
 		 szcontent[strlen(szcontent) - 1] = '\0';
 
-	 sprintf ( szbuf, "\033[%d;40m%02d:%02d:%02d[%s] %s\033[0m\n",color[level],
+	 sprintf ( szbuf, "\033[%d;40m%02d:%02d:%02d[%s] [%s-%d]%s\033[0m\n",color[level],
 				 stm.tm_hour, stm.tm_min, stm.tm_sec,
-				 module, szcontent );
+				 module, __FILE__,__LINE__,szcontent );
 
 	 printf ( "%s", szbuf );
 	 return 1;

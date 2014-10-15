@@ -30,6 +30,8 @@ const char PP[] = "/dev/pp";
 
 const char* dev="eth0";
 
+extern int PP_fd;
+
 //ioctl
 #define PP_CMD_MAGIC	'P'
 #define PP_IOCTL_LED_1_CTL		_IOW(PP_CMD_MAGIC,0,int)
@@ -58,11 +60,15 @@ CDevice::CDevice()
 	IConfigManager::instance()->reg(this);
 
 	this->fd = open(PP, O_RDWR);
+
+	this->fd = PP_fd;
+	#if 0
 	if(this->fd <= 0)
 	{
 		errorf("open pp failed\n");
 	}
-	infof("fd = %d\n", this->fd);
+	#endif
+	infof("+++++++++++++++++++fd = %d\n", this->fd);
 
 	int ctl_data = 0;//关闭所有指示灯
 	//ioctl(fd, PP_IOCTL_LED_1_CTL, &ctl_data);
@@ -100,6 +106,27 @@ void CDevice::ThreadProc()
 					//infof("msetLedStat[%d] = %d\n", i, msetLedStat[i]);
 					msetLedStat[i]=(msetLedStat[i]+1) & 0x01;
 					break;
+				case 3://闪烁，时间不一样
+					if(msetLedStat[i] >= (onTime[i] + offTime[i]))
+					{
+						//infof("onTime = %d, offTime = %d\n", onTime, offTime);
+						msetLedStat[i] = 0;
+					}
+					if(msetLedStat[i] == 0)
+					{
+						//tracepoint();
+						in_setLed((LED_NAME)i, 1);
+					}
+					else if(msetLedStat[i] > onTime[i])
+					{
+						//tracepoint();
+						in_setLed((LED_NAME)i, 0);
+					}
+
+					msetLedStat[i]=(msetLedStat[i]+1);
+
+					
+					infof("msetLedStat[%d] = %d\n", i, msetLedStat[i]);
 				default:break;
 			}
 		}
@@ -107,17 +134,44 @@ void CDevice::ThreadProc()
 	}
 }
 
-int CDevice::get_tx_status(int* p)
+uchar* CDevice::get_tx_status(int* pp)
 {
 
-	ioctl(fd, PP_IOCTL_GET_TX_STATUS, &buf_status);
-	p = buf_status.buf;
-	return buf_status.buf_length;
+	ioctl(fd, PP_IOCTL_GET_TX_STATUS, &buf_tx_status);
+	infof("+++tx++%p+++\n", &buf_tx_status.buf[0]);
+	*pp = buf_tx_status.buf_length;
+	infof("+++txp++%d+++\n", *pp);
+
+	return &buf_tx_status.buf[0];
 
 }
+
+uchar* CDevice::get_rx_status(int* pp)
+{
+
+	ioctl(fd, PP_IOCTL_GET_RX_STATUS, &buf_rx_status);
+	infof("+++trx++%p+++\n", &buf_rx_status.buf[0]);
+	*pp = buf_rx_status.buf_length;
+	infof("+++trxp++%d+++\n", *pp);
+
+	return &buf_rx_status.buf[0];
+
+}
+
+
 bool CDevice::setLed(LED_NAME nm, int state)
 {
 	msetLed[nm] = state;
+	infof("msetLed[%d] = %d\n", nm, msetLed[nm]);
+	return true;
+}
+
+bool CDevice::setLed(LED_NAME nm, int state, int on, int off)
+{
+	msetLed[nm] = state;
+	//msetLedStat[nm] = 0;
+	onTime[nm] = on;
+	offTime[nm] = off;
 	infof("msetLed[%d] = %d\n", nm, msetLed[nm]);
 	return true;
 }

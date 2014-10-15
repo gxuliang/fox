@@ -10,6 +10,9 @@
 
 const char PP[] = "/dev/pp";
 const char Welcome[] = "/******************************/\r\n/*****欢迎使用打印服务系统%(^&*())*****/\r\n";
+
+extern int PP_fd;
+
 IPrinter::IPrinter(int type, CConfigTable& tb,IPrinter* pPrinter):m_mutex(CMutex::mutexRecursive)
 {
 	this->rd=0;
@@ -21,18 +24,21 @@ IPrinter::IPrinter(int type, CConfigTable& tb,IPrinter* pPrinter):m_mutex(CMutex
 	infof("type = %d\n", type);
 	//if(this->mtype == 1)//测试的是输出打印机
 	{
+		this->fd = PP_fd;
+		#if 0
 		this->fd = open(PP, O_RDWR);
 		if(this->fd <= 0)
 		{
 			errorf("open pp failed\n");
 		}
-		infof("fd = %d\n", this->fd);
+		#endif
+		infof("==============================================fd = %d\n", this->fd);
 	}
 	if(this->mtype == 1)//测试的是输出打印机
 	{
 		//write(this->fd, Welcome, 3);
-		//if(tb["welcomeauto"].asString() == "wyes")
-		//	this->put(Welcome, sizeof(Welcome));
+		if(tb["welcomeauto"].asString() == "wyes")
+			this->put(Welcome, sizeof(Welcome));
 
 		//int test_fd = open("test.txt", O_RDWR);
 		//char test_buf[2048]="";
@@ -130,9 +136,11 @@ bool IPrinter::put(const char* dat,int len)
 	//sleep(1);
 	//write(fd, dat, 1);
 	tracepoint();
+	errorf("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+
 	while(i < len)
 	{
-		infof("buf[0] = %c, len = %d\n", dat[0], len);
+		infof("fd = %d, buf[0] = %c, len = %d\n", this->fd, dat[0], len);
 		res = write(this->fd, &dat[i], len-i);
 		i += res;
 		//infof("res = %d\n", res);
@@ -181,13 +189,13 @@ int IPrinter::left(void)
 }
 
 
-int IPrinter::showbuf(char* dat, int len)
+uchar* IPrinter::showtxbuf(int* dat, int len)
 {
-	int length, *p;
-	length = IDevice::instance()->get_tx_status(p);
-	infof("len = %d\n", length);
-	dat = (char*)p;
-	return length;
+	uchar *p=NULL;
+	p = IDevice::instance()->get_tx_status(dat);
+	infof("len = %d, p = %p\n", *dat, p);
+	p[*dat] = '\0';
+	return p;
 	#if 0
 	int i = 0;
 	if (dat == NULL || (this->wr == this->rd && this->fullflag==false))
@@ -206,6 +214,16 @@ int IPrinter::showbuf(char* dat, int len)
 
 }
 
+uchar* IPrinter::showrxbuf(int* dat, int len)
+{
+	uchar *p=NULL;
+	p = IDevice::instance()->get_rx_status(dat);
+	infof("len = %d, p = %p\n", *dat, p);
+	p[*dat] = '\0';
+	return p;
+
+}
+
 static char tmp[2048];
 
 void IPrinter::ThreadProc()
@@ -213,7 +231,7 @@ void IPrinter::ThreadProc()
 	int i=0;
 	if(this->mtype == 0)//输入，需要读取输入打印机数据和状态
 	{
-		char tmp[128]="";
+		//char tmp[128]="";
 		while(1)
 		{
 			//sleep(1);
@@ -221,7 +239,10 @@ void IPrinter::ThreadProc()
 			//bzero(tmp, sizeof(tmp));
 			tracepoint();
 			int len = read(this->fd, tmp, sizeof(tmp));
-			debugf("read len = %d, 1st is [%c]\n", len, tmp[0]);
+			errorf("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+			debugf("read len = %d, 1st is [%c]\n", len, tmp[0]);			
+			errorf("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+
 			if(len > 0)
 			{
 				while(0)//(this->pWriter->write(tmp, len) == false)
@@ -230,7 +251,13 @@ void IPrinter::ThreadProc()
 				//	sleep(1);
 				}
 				infof("===%p==%d=\n", this->pWriter,i++);
-				this->pWriter->write(tmp, len);
+				int ret = 0, cnt = 0;
+				while(len > 0)
+				{
+					ret = this->pWriter->write(&tmp[cnt], len);
+					len = len - ret;
+					cnt = cnt + ret;
+				}
 				tracepoint();
 
 				usleep(500000);

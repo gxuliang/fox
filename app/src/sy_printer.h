@@ -21,7 +21,8 @@ public:
 	bool put(const char* dat,int len);//向缓冲区写入数据
 	bool putfile(const char* file);//把文件内容写入并口缓冲区
 	int left(void);//剩余缓冲区大小
-	int showbuf(char* dat, int len);//显示缓冲区内容，dat由调用者申请，并提供最大长度，返回实际长度
+	uchar* showtxbuf(int* dat, int len);//显示缓冲区内容，dat由调用者申请，并提供最大长度，返回实际长度
+	uchar* showrxbuf(int* dat, int len);
 	
 	bool autowelcome;
 	char cip[32];

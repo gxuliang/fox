@@ -79,7 +79,10 @@ class CProtocol
 public:
 	CProtocol();
 	bool deal(ICtlNetService* p, char* buf);
+	bool sendCmd(ICtlNetService* p, uchar type);
+	bool alarm;
 private:
+	bool sendCmdRespone(ICtlNetService* p, uchar type);
 	bool getMAC(ICtlNetService* p, uchar type);
 	bool enableAlarm(ICtlNetService* p, uchar type);
 	bool disableAlarm(ICtlNetService* p, uchar type);

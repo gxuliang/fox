@@ -36,8 +36,9 @@ public:
 	bool close();
 	void perror(const char* info);
 	bool conn_flag;
-private:
 	int fd;
+
+private:
 	struct sockaddr_in addr;
 	socklen_t addrlen;
 };

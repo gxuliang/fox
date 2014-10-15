@@ -25,7 +25,7 @@
 typedef struct tag_buf_status_t 
 { 
 	int buf_length;
-	int buf[2048];
+	uchar buf[2048];
 }buf_status_t;
 
 class CDevice : public IDevice, public ISetConfig, public CThread
@@ -37,7 +37,10 @@ public:
 	bool setConfig1(const char* name, CConfigTable& table);
 	bool getMAC(char* hd);
 	bool setLed(LED_NAME nm, int state);
-	int get_tx_status(int* p);
+	bool setLed(LED_NAME nm, int state, int on, int off);
+
+	uchar* get_tx_status(int* p);
+	uchar* get_rx_status(int* p);
 
 private:
 	bool in_setLed(LED_NAME nm, int state);
@@ -50,7 +53,10 @@ private:
 	int fd;   
 	int msetLed[MAX_LED_NUM];
 	int msetLedStat[MAX_LED_NUM];
-	buf_status_t buf_status;
+	buf_status_t buf_tx_status;
+	buf_status_t buf_rx_status;
+
+	int onTime[MAX_LED_NUM], offTime[MAX_LED_NUM];
 };
 
 #endif

@@ -127,11 +127,13 @@ bool SYRpc::getState(const Json::Value& root, Json::Value& response)
 	name = root["params"]["name"].asString();
 	infof("%s", name.c_str());
 	response["id"] = root["id"];
+	uchar* dat;
+	uchar* p1=NULL, *p2=NULL;
 
-	if(root["params"]["name"] == "Buf")
+/*
+	if(root["params"]["name"] == "txBuf")
 	{
-		char dat[MAX_LEN]="";
-		int len = gPrintOut->showbuf(dat, MAX_LEN);
+		int len = gPrintOut->showtxbuf(dat, MAX_LEN);
 		infof("dat is [%s]\n", dat);
 		response["params"]["name"] = name;
 		response["params"]["buf"] = dat;
@@ -139,6 +141,42 @@ bool SYRpc::getState(const Json::Value& root, Json::Value& response)
 		response["params"]["pencent"] = len*10000/MAX_LEN;
 		response["result"] = "true";
 		std::cout << "ans " << response << std::endl;
+
+	}
+	else if(root["params"]["name"] == "rxBuf")
+	{
+		int len = gPrintOut->showrxbuf(dat, MAX_LEN);
+		infof("dat is [%s]\n", dat);
+		response["params"]["name"] = name;
+		response["params"]["buf"] = dat;
+		response["params"]["len"] = len;
+		response["params"]["pencent"] = len*10000/MAX_LEN;
+		response["result"] = "true";
+		std::cout << "ans " << response << std::endl;
+
+	}
+	*/
+	if(root["params"]["name"] == "Buf")
+	{
+		int len[2];
+		p1 = gPrintOut->showtxbuf(&len[0], MAX_LEN);
+		p2 = gPrintOut->showrxbuf(&len[1], MAX_LEN);
+		std::string sp1,sp2;
+		sp1 = (char*)p1;
+		sp2 = (char*)p2;
+		infof("-----%c\n", p1[1]);
+		response["params"]["name"] = name;
+		response["params"]["buf"][0u] = sp1;
+		response["params"]["len"][0u] = len[0];
+		response["params"]["pencent"][0u] = len[0]*10000/MAX_LEN;
+
+		response["params"]["buf"][1] = sp2;
+		response["params"]["len"][1] = len[1];
+		response["params"]["pencent"][1] = len[1]*10000/MAX_LEN;
+		response["result"] = "true";
+
+		std::cout << "ans " << response << std::endl;
+
 
 	}
 	

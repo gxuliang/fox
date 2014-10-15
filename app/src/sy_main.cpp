@@ -19,16 +19,29 @@
 
 const char * mainPath = "/config/Config";
 const char * defaultPath = "/tmp/Default";
+const char *PPP = "/dev/pp";
 
 IPrinter *gPrintOut=NULL;
 //IPrinter gPrintOut;
 IUpgrade *gUpgrade;
 
+
+int PP_fd;
+
 void rewrite_software();
 int main(int argc, char* argv[])
 {
 	infof("app start!\n");
+	infof("mainPath = [%s]\n", mainPath);
+	infof("defaultPath = [%s]\n", defaultPath);
+	signal(SIGPIPE, SIG_IGN);
+
 	INetRpc::instance()->start();
+	PP_fd = open(PPP, O_RDWR);
+	if(PP_fd <=0)
+		return -1;
+
+	
 	CConfigTable aConfig;
 	IConfigManager::config(mainPath, defaultPath);
 	IConfigManager::instance()->getConfig("All", aConfig);
@@ -39,6 +52,12 @@ int main(int argc, char* argv[])
 	//ILog::instance();
 		
 	gUpgrade = new IUpgrade(); 
+
+	//程序起来后需要响一下
+	IDevice::instance()->setLed(IDevice::LED_ALARM, 1);
+	sleep(1);
+	IDevice::instance()->setLed(IDevice::LED_ALARM, 0);
+
 	IDevice::instance()->setLed(IDevice::LED_BOOT, 2);
 	while(0)
 	{

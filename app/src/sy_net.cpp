@@ -50,11 +50,14 @@ int MyClient::read(void* buf, int len, int timeout)
 int MyClient::write(const void* buf, int len)
 {
 	int ret;
-	warnf("fd = %d\n", fd);
+	warnf("fd = %d, buf is %p, len = %d\n", fd, buf, len);
 	if(fd <=0 || conn_flag == false)
 		return false;
 
-	ret = ::write(fd, buf, len);
+	ret = ::send(fd, buf, len,0);
+	if(ret < 0)
+		perror("::send");
+
 	return ret;
 }
 

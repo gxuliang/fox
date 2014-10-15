@@ -263,7 +263,18 @@ bool CCtlNetService::restart()
 void CCtlNetService::ThreadProc()
 {
 	sock = new MyClient();
+	if(sock == NULL)
+	{
+		errorf("sock is null!\n");
+		return;
+	}
 	char * buf = new char[BUF_MAX];
+	if(buf == NULL)
+	{
+		errorf("buf is null!\n");
+		return;
+	}
+
 	while(loopflag)
 	{
 		//tracepoint();
@@ -271,22 +282,35 @@ void CCtlNetService::ThreadProc()
 		{	
 			if(sock->connect(ipaddr.c_str(), port) == false)
 			{
-				IDevice::instance()->setLed(IDevice::LED_ALARM, 1);
+				errorf("can not connect ip[%s]\n", ipaddr.c_str());
+				IDevice::instance()->setLed(IDevice::LED_ALARM, 3, 1, 10);//1=0.5秒，10=5秒
 				sock->perror("CCtlNetService::connect");
 				sleep(2);
 				continue;
 			}
 		}
-
-			IDevice::instance()->setLed(IDevice::LED_ALARM, 0);
-			int len = sock->read(buf, BUF_MAX);
+			if(mprotocol->alarm == false)
+				IDevice::instance()->setLed(IDevice::LED_ALARM, 0);
+			errorf("sock->fd = %d==========================\n", sock->fd);
+			int len = sock->read(buf, BUF_MAX,10000);//三秒超时
 			if(len > 0)
 			{
 				infof("read network data len = %d\n", len);
-				mprotocol->deal(this, buf);
+				mprotocol->deal(this, buf);		
 			}
-			else if(len <= 0)
+			else if(len == 0)
+			{//0标示超时，这里加一个发送心跳的处理
+				//if(mprotocol->sendCmd(this, 0x04) == false)
+				{
+				//	errorf("net ill, reconnect!\n");
+				//	sock->close();
+				//	continue;
+				}	
+			}
+			else if(len < 0)
 			{
+				
+
 				if(loopflag == false)
 				{
 					infof("CCtlNetService::it will be over1!\n");
@@ -349,6 +373,7 @@ CProtocol::CProtocol()
 
 	psendbuf = new char[1400];
 	memcpy(psendbuf, head, HEAD_LEN);
+	alarm = false;
 }
 
 bool CProtocol::deal(ICtlNetService* p, char* buf)
@@ -369,6 +394,8 @@ bool CProtocol::deal(ICtlNetService* p, char* buf)
 			return getMAC(p, type);
 		case 0x03:
 			return getHeart(p, type);
+		case 0x04://设备发送心跳包
+			return sendCmdRespone(p,type);
 		case 0x06:
 			return enableAlarm(p, type);
 		case 0x07: 
@@ -380,21 +407,44 @@ bool CProtocol::deal(ICtlNetService* p, char* buf)
 		case 0xFD:
 			return resetHW(p, type);
 		default:
+			warnf("unknow type %x\n", type);
 			return false;
 	}
 
+}
+bool CProtocol::sendCmdRespone(ICtlNetService* p, uchar type)
+{
+	warnf("the type %x\n", type);
+	return false;
+}
+bool CProtocol::sendCmd(ICtlNetService* p, uchar type)
+{
+	infof("CProtocol::sendCmd\n");
+	psendbuf[HEAD_LEN] = 2;
+	psendbuf[HEAD_LEN+1] = 0x00;
+	psendbuf[HEAD_LEN+2] = 0x04;
+	int len = HEAD_LEN + 1 + psendbuf[HEAD_LEN];
+	int ret = p->write(psendbuf, len);
+	infof("====len=%d=====ret = %d====%p====\n", len, ret, p);
+
+	if(ret <= 0)
+		return false;
+	else
+		return true;
 }
 bool CProtocol::enableAlarm(ICtlNetService* p, uchar type)
 {
 	if(type == 0x00)
 	{
 		infof("CProtocol::enableAlarm\n");
-		IDevice::instance()->setLed(IDevice::LED_ALARM, 2);
+		IDevice::instance()->setLed(IDevice::LED_ALARM, 1);
 		psendbuf[HEAD_LEN] = 2;
 		psendbuf[HEAD_LEN+1] = 0x01;
 		psendbuf[HEAD_LEN+2] = 0x06;
 		int len = HEAD_LEN + 1 + psendbuf[HEAD_LEN];
 		p->write(psendbuf, len);
+		alarm = true;
+
 	}
 	
 	return true;
@@ -410,6 +460,8 @@ bool CProtocol::disableAlarm(ICtlNetService* p, uchar type)
 		psendbuf[HEAD_LEN+2] = 0x07;
 		int len = HEAD_LEN + 1 + psendbuf[HEAD_LEN];
 		p->write(psendbuf, len);
+		alarm = false;
+
 	}
 	
 	return true;
