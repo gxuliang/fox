@@ -39,8 +39,8 @@ OBJS = 	$(OBJ)sy_semaphore.o \
 		$(OBJ)sy_rpcmethod.o	\
 		$(OBJ)sy_thread.o		\
 		$(OBJ)sy_printer.o		\
-		$(OBJ)sy_netService.o		\
 		$(OBJ)sy_device.o		\
+		$(OBJ)sy_netServ.o		\
 		$(OBJ)sy_upgrade.o		\
 		$(OBJ)sy_main.o	\
 				

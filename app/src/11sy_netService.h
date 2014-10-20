@@ -1,5 +1,5 @@
 /*
- * sy_netService.h
+ * sy_netServ.h
  *
  *  Created on: 2014-8-27
  *      Author: xul
@@ -16,7 +16,7 @@
 #include "base/sy_mutex.h"
 #include "base/sy_singletion.h"
 #include "base/sy_net.h"
-#include "NetService/sy_netService.h"
+#include "NetService/sy_netServ.h"
 #include "Manager/sy_configManager.h"
 #include "sy_thread.h"
 

@@ -9,8 +9,11 @@
 #define _EX_SY_DEVICE_H_
 
 
+
+
 class IDevice
 {
+
 public:
 	enum LED_NAME
 	{  //１报警双色，２启动，３连接，４升级，５给驱动用
@@ -29,10 +32,8 @@ public:
 	virtual bool setLed(LED_NAME nm, int state) = 0;
 	virtual	bool setLed(LED_NAME nm, int state, int on, int off) = 0;
 
-
 	virtual 	uchar* get_tx_status(int* p) =0;
 	virtual 	uchar* get_rx_status(int* p) =0;
-
 };
 
 

@@ -1,6 +1,6 @@
 
 #include "base/sy_types.h"
-#include "NetService/sy_netService.h"
+#include "NetService/sy_netServ.h"
 
 #include "sy_printer.h"
 #include "base/sy_types.h"
@@ -61,7 +61,7 @@ IPrinter::IPrinter(int type, CConfigTable& tb,IPrinter* pPrinter):m_mutex(CMutex
 	}
 	else
 	{
-		this->pWriter = INetService::instance();
+		this->pWriter = INetServ::instance();
 	}
 	this->CreateThread();
 }
@@ -254,9 +254,17 @@ void IPrinter::ThreadProc()
 				int ret = 0, cnt = 0;
 				while(len > 0)
 				{
-					ret = this->pWriter->write(&tmp[cnt], len);
-					len = len - ret;
-					cnt = cnt + ret;
+					if(this->pWriter->getState()==true)
+					{
+						ret = this->pWriter->write(&tmp[cnt], len);
+						len = len - ret;
+						cnt = cnt + ret;
+					}
+					else
+					{
+						put(&tmp[cnt], len);
+					}
+					
 				}
 				tracepoint();
 

@@ -88,6 +88,8 @@ typedef unsigned long long int	uint64;
 
 typedef Json::Value CConfigTable;
 
+
+
 #define MAX_PATH				512
 
 #endif /* SY_TYPES_H_ */

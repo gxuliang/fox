@@ -300,11 +300,11 @@ void CCtlNetService::ThreadProc()
 			}
 			else if(len == 0)
 			{//0标示超时，这里加一个发送心跳的处理
-				//if(mprotocol->sendCmd(this, 0x04) == false)
+				if(mprotocol->sendCmd(this, 0xFE) == false)
 				{
-				//	errorf("net ill, reconnect!\n");
-				//	sock->close();
-				//	continue;
+					errorf("net ill, reconnect!\n");
+					sock->close();
+					continue;
 				}	
 			}
 			else if(len < 0)
@@ -406,8 +406,9 @@ bool CProtocol::deal(ICtlNetService* p, char* buf)
 			return getHW(p, type);
 		case 0xFD:
 			return resetHW(p, type);
+		//case 0xFE:
 		default:
-			warnf("unknow type %x\n", type);
+			warnf("unknow cmd %x\n", cmd);
 			return false;
 	}
 
@@ -422,7 +423,7 @@ bool CProtocol::sendCmd(ICtlNetService* p, uchar type)
 	infof("CProtocol::sendCmd\n");
 	psendbuf[HEAD_LEN] = 2;
 	psendbuf[HEAD_LEN+1] = 0x00;
-	psendbuf[HEAD_LEN+2] = 0x04;
+	psendbuf[HEAD_LEN+2] = type;
 	int len = HEAD_LEN + 1 + psendbuf[HEAD_LEN];
 	int ret = p->write(psendbuf, len);
 	infof("====len=%d=====ret = %d====%p====\n", len, ret, p);

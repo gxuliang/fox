@@ -22,11 +22,11 @@
 
 #define MAX_LED_NUM 5
 
-typedef struct tag_buf_status_t 
-{ 
-	int buf_length;
-	uchar buf[2048];
-}buf_status_t;
+	 struct buf_status_t 
+	{ 
+		int buf_length;
+		uchar buf[2048];
+	};
 
 class CDevice : public IDevice, public ISetConfig, public CThread
 {

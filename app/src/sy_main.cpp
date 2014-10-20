@@ -9,7 +9,7 @@
 #include "base/sy_semaphore.h"
 #include "base/sy_debug.h"
 #include "Manager/sy_configManager.h"
-#include "NetService/sy_netService.h"
+#include "NetService/sy_netServ.h"
 #include "rpc/sy_netrpc.h"
 #include "user/sy_user.h"
 #include "sy_printer.h"
@@ -68,10 +68,12 @@ int main(int argc, char* argv[])
 	gPrintOut = &printOut;
 
 
-	INetService::instance()->setConfig("NetService", aConfig["NetService"]);
+	//INetService::instance()->setConfig("NetService", aConfig["NetService"]);
 	tracepoint();
-	ICtlNetService::instance()->setConfig("NetService", aConfig["NetService"]);
+	//ICtlNetService::instance()->setConfig("NetService", aConfig["NetService"]);
 	tracepoint();
+
+	INetServ::instance()->setConfig("ServerInfo", aConfig["ServerInfo"]);
 
 	IPrinter printIn = IPrinter(0, aConfig["PrinterIn"], &printOut);//a=打印机输入，b=打印机输出
 	

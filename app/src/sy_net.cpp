@@ -13,6 +13,8 @@ MyClient::MyClient()
 {
 	fd = 0;
 	conn_flag = false;
+	
+
 }
 
 MyClient::~MyClient()
@@ -65,27 +67,28 @@ bool MyClient::close()
 {
 	bool ret = false;
 	std::cout << "111:" << fd << std::endl;
+	
 	if(::close(fd) == 0)
 	{
 		std::cout << "222" << std::endl;
 		ret = true;
 	}
+	
 	std::cout << "333" << std::endl;
 	conn_flag = false;
-	return ret;
+	return true;
 }
 
 bool MyClient::connect(const char* ip, const ushort port)
 {
-
 	fd = ::socket(AF_INET, SOCK_STREAM, 0);
-	if(fd < 0)
+	debugf("========================fd = %d\n", fd);
+	if(fd <= 0)
 	{
 		perror("socket");
 		return false;
 	}
 
-	debugf("fd = %d\n", fd);
 	::bzero(&addr, sizeof(struct sockaddr_in));
 	addrlen = sizeof(struct sockaddr);
 	addr.sin_family = AF_INET;

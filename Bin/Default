@@ -1,7 +1,10 @@
 {
    "ALL" : null,
+   "NetService" : {
+      "ipaddr" : "192.168.2.104"
+   },
    "PrinterIn" : {
-      "prspeed" : "ls",
+      "prspeed" : "hs",
       "prtype" : "ck"
    },
    "PrinterOut" : {
@@ -13,18 +16,21 @@
       "hw" : "1.1",
       "lan" : "chn",
       "mode" : "test",
-      "name" : "税友智能盒",
-      "sw" : "1.0"
+      "name" : "绋界
+      "sw" : "General_SY_Chn_P_V1.100.0000.0.R.20141016"
    },
    "tcp-ip" : {
       "dsn" : [ "8.8.8.8", "9.9.9.9" ],
       "gateway" : "192.168.2.1",
       "hardware" : "lan",
-      "ip" : "192.168.2.108",
+      "ip" : "192.168.2.26",
       "ipver" : "ipv4",
+      "mac" : "FA:57:02:23:33:E2",
       "mode" : "static",
       "name" : "NC616v3",
-      "netmask" : "255.255.255.0"
+      "netmask" : "255.255.255.0",
+      "tcpID" : "000122",
+      "tcpName" : "No002"
    },
    "timeset" : {
       "datefmt" : "y-m-d",

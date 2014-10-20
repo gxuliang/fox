@@ -14,7 +14,7 @@
 #include "sy_device.h"
 #include "sy_printer.h"
 
-#include "NetService/sy_netService.h"
+#include "NetService/sy_netServ.h"
 
 #include "stdio.h"
 #include "stdlib.h"
@@ -126,7 +126,7 @@ void CDevice::ThreadProc()
 					msetLedStat[i]=(msetLedStat[i]+1);
 
 					
-					infof("msetLedStat[%d] = %d\n", i, msetLedStat[i]);
+					//infof("msetLedStat[%d] = %d\n", i, msetLedStat[i]);
 				default:break;
 			}
 		}
@@ -242,8 +242,9 @@ bool CDevice::setNetWork(const CConfigTable& table)
 			return false;
 		if(this->setgateway(table["gateway"]) == false)
 			return false;
-		INetService::instance()->restart();
-		ICtlNetService::instance()->restart();
+		//INetService::instance()->restart();
+		//ICtlNetService::instance()->restart();
+		INetServ::instance()->restart();
 		tracepoint();
 		//infof("-------------------------\n");
 		//sleep(3);
