@@ -252,23 +252,26 @@ void IPrinter::ThreadProc()
 				}
 				infof("===%p==%d=\n", this->pWriter,i++);
 				int ret = 0, cnt = 0;
-				while(len > 0)
+				
+				
+				if(this->pWriter->getState()==true)
 				{
-					if(this->pWriter->getState()==true)
+					while(len > 0)
 					{
 						ret = this->pWriter->write(&tmp[cnt], len);
 						len = len - ret;
 						cnt = cnt + ret;
 					}
-					else
-					{
-						put(&tmp[cnt], len);
-					}
-					
 				}
+				else
+				{
+					put(&tmp[cnt], len);
+				}
+					
+				
 				tracepoint();
 
-				usleep(500000);
+				//usleep(500000);
 			}
 		}
 	}

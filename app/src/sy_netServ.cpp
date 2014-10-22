@@ -29,10 +29,11 @@ CNetServ::~CNetServ()
 CNetServ::CNetServ()
 {
 	loopflag = false;
-	strncpy(this->str, "NetServ", sizeof(str));
+	strncpy(this->str, "ServerInfo", sizeof(str));
 	IConfigManager::instance()->reg(this);
 	buf = new char[BUF_MAX];
 	mprotocol = new CProtocol();
+	pipe(fd);
 	
 
 }
@@ -98,29 +99,29 @@ void CNetServ::ThreadProc()
 		{
 			if(sock1->connect(ipinfo[i].ipaddr.c_str(), ipinfo[i].port[1]) == false)
 			{
+				infof("======================%s====\n", ipinfo[i].ipaddr.c_str());
 				IDevice::instance()->setLed(IDevice::LED_ALARM, 3, 1, 10);//1=0.5秒，10=5秒
 				sock1->perror("CNetServ::connect");
 				sleep(timeout);
 				cnt++;
-				if(cnt >= count)
+				if(cnt > count)
 				{
 					cnt = 0;
 					i = (i+1) & 0x01;
 				}
-				else
-				{
-					continue;
-				}
+				
+				continue;
+				
 			}
 		}
 
 		if(mprotocol->alarm == false)
 			IDevice::instance()->setLed(IDevice::LED_ALARM, 0);
-		infof("sock1->fd = %d==============98============\n", sock1->fd);
+		infof("sock1->fd = %d==============98========%s====\n", sock1->fd,ipinfo[0].ipaddr.c_str());
 
 		if(sock2->conn_flag == false)
 		{
-			infof("sock2->fd = %d==============112============\n", sock2->fd);
+			infof("sock2->fd = %d==============112=======%s=====\n", sock2->fd, ipinfo[1].ipaddr.c_str());
 			if(sock2->connect(ipinfo[i].ipaddr.c_str(), ipinfo[i].port[0]) == false)
 			{//这个错误一般不会发生
 				IDevice::instance()->setLed(IDevice::LED_CONN, 2);
@@ -138,14 +139,17 @@ void CNetServ::ThreadProc()
 		FD_ZERO(&readfds);
 		FD_SET(sock1->fd, &readfds);
 		FD_SET(sock2->fd, &readfds);
-		overtime.tv_sec = 10;
+		FD_SET(fd[0], &readfds);
+		overtime.tv_sec = 3;
 		overtime.tv_usec = 0;
 
 		int max_fd = (sock1->fd > sock2->fd)?sock1->fd:sock2->fd;
-
+		infof("----------------%d+++++++++\n",overtime.tv_sec);
 		int ret = ::select(max_fd+1, &readfds, NULL, NULL, &overtime);
 		if(ret == 0)
-		{//10秒超时到了，发送心跳包
+		{//3秒超时到了，发送心跳包
+			tracepoint();
+			infof("++++++++++++++++%d+++++++++\n",overtime.tv_sec);
 			if(mprotocol->sendCmd(this, 0xFE) == false)
 			{
 				errorf("net ill, reconnect!\n");
@@ -155,7 +159,7 @@ void CNetServ::ThreadProc()
 				continue;
 			}	
 			con_reset ++;
-			if(con_reset >= 10)
+			if(con_reset >= 3)
 			{
 				tracepoint();
 				errorf("something error!\n");		
@@ -175,7 +179,16 @@ void CNetServ::ThreadProc()
 		}
 		else
 		{
-			if(FD_ISSET(sock1->fd, &readfds) != 0)
+			if(FD_ISSET(fd[0], &readfds) != 0)
+			{
+				int len = read(fd[0], buf, BUF_MAX);
+				tracepoint();
+				errorf("param changed, close socket!\n");
+				sock1->close();
+				sock2->close();
+				continue;
+			}
+			else if(FD_ISSET(sock1->fd, &readfds) != 0)
 			{
 				int len = sock1->read(buf, BUF_MAX);
 				if(len > 0)
@@ -236,18 +249,18 @@ bool CNetServ::stop()
 	}
 	*/
 
-	infof("CNetService::stopping...\n");
+	infof("CNetServ::stopping...\n");
 	this->CloseTread();
-	infof("CNetService::stop ok!\n");
+	infof("CNetServ::stop ok!\n");
 	return true;
 }
 
 bool CNetServ::start()
 {
 	loopflag = true;
-	infof("CNetService::starting...\n");
+	infof("CNetServ::starting...\n");
 	this->CreateThread();
-	infof("CNetService::start ok\n");
+	infof("CNetServ::start ok\n");
 	return true;
 }
 

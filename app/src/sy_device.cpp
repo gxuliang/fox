@@ -126,7 +126,7 @@ void CDevice::ThreadProc()
 					msetLedStat[i]=(msetLedStat[i]+1);
 
 					
-					//infof("msetLedStat[%d] = %d\n", i, msetLedStat[i]);
+					//infof("++++++++++++++msetLedStat[%d] = %d\n", i, msetLedStat[i]);
 				default:break;
 			}
 		}

@@ -57,6 +57,8 @@ private:
 	char* buf;
 	MyClient* sock1,*sock2;
 	CProtocol *mprotocol;
+	int fd[2];
+	bool startflag;
 
 
 

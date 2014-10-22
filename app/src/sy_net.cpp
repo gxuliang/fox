@@ -88,6 +88,8 @@ bool MyClient::connect(const char* ip, const ushort port)
 		perror("socket");
 		return false;
 	}
+	unsigned long ul = 1;
+	ioctl(fd, FIONBIO, &ul); //设置为非阻塞模式
 
 	::bzero(&addr, sizeof(struct sockaddr_in));
 	addrlen = sizeof(struct sockaddr);
@@ -96,6 +98,24 @@ bool MyClient::connect(const char* ip, const ushort port)
 	addr.sin_port = htons(port);
 	if(::connect(fd, (struct sockaddr*)&addr, addrlen) < 0)
 	{
+		struct timeval tm;
+		fd_set set;
+		int error, len;
+
+		tm.tv_sec  = 5;
+        tm.tv_usec = 0;
+        FD_ZERO(&set);
+        FD_SET(fd, &set);
+        if( ::select(fd+1, NULL, &set, NULL, &tm) > 0)
+        {
+        	getsockopt(fd, SOL_SOCKET, SO_ERROR, &error, (socklen_t *)&len);
+        	if(error == 0)
+        	{	
+        		conn_flag = true;
+        		return true;
+        	}
+        }
+
 		perror("connect");
 		close();
 		return false;

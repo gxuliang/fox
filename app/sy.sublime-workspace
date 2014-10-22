@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"co",
+				"conn_flag"
+			],
+			[
+				"soc",
+				"sock2"
+			],
+			[
+				"FD",
+				"fd"
+			],
+			[
+				"ip",
+				"ipinfo"
+			],
+			[
 				"on",
 				"onTime"
 			],
@@ -38,10 +54,6 @@
 			[
 				"con",
 				"continue"
-			],
-			[
-				"co",
-				"connect"
 			],
 			[
 				"tra",
@@ -119,31 +131,31 @@
 			"file": "src/sy_main.cpp",
 			"settings":
 			{
-				"buffer_size": 2327,
+				"buffer_size": 2400,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "inc/Device/sy_device.h",
+			"file": "src/sy_netServ.h",
 			"settings":
 			{
-				"buffer_size": 708,
+				"buffer_size": 1568,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "src/sy_device.h",
+			"file": "/Users/xul/work/fox/Bin/Default",
 			"settings":
 			{
-				"buffer_size": 1336,
+				"buffer_size": 1135,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "src/sy_device.cpp",
+			"file": "/Users/xul/work/fox/Bin/Config",
 			"settings":
 			{
-				"buffer_size": 8395,
+				"buffer_size": 957,
 				"line_ending": "Unix"
 			}
 		},
@@ -151,7 +163,7 @@
 			"file": "src/sy_printer.cpp",
 			"settings":
 			{
-				"buffer_size": 5806,
+				"buffer_size": 5915,
 				"line_ending": "Windows"
 			}
 		},
@@ -159,7 +171,7 @@
 			"file": "src/sy_printer.h",
 			"settings":
 			{
-				"buffer_size": 911,
+				"buffer_size": 905,
 				"line_ending": "Windows"
 			}
 		},
@@ -175,39 +187,15 @@
 			"file": "src/sy_netService.cpp",
 			"settings":
 			{
-				"buffer_size": 10303,
+				"buffer_size": 10308,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "inc/NetService/sy_netService.h",
+			"file": "src/sy_netServ.cpp",
 			"settings":
 			{
-				"buffer_size": 757,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "src/sy_netService.h",
-			"settings":
-			{
-				"buffer_size": 2008,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "inc/base/sy_net.h",
-			"settings":
-			{
-				"buffer_size": 703,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "src/sy_net.cpp",
-			"settings":
-			{
-				"buffer_size": 1809,
+				"buffer_size": 9719,
 				"line_ending": "Unix"
 			}
 		},
@@ -215,15 +203,7 @@
 			"file": "Makefile",
 			"settings":
 			{
-				"buffer_size": 1032,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "inc/Manager/sy_configManager.h",
-			"settings":
-			{
-				"buffer_size": 1772,
+				"buffer_size": 1029,
 				"line_ending": "Unix"
 			}
 		},
@@ -266,6 +246,70 @@
 				"buffer_size": 396,
 				"line_ending": "Unix"
 			}
+		},
+		{
+			"file": "src/sy_user.cpp",
+			"settings":
+			{
+				"buffer_size": 1424,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/sy_netService.h",
+			"settings":
+			{
+				"buffer_size": 2002,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "inc/NetService/sy_netServ.h",
+			"settings":
+			{
+				"buffer_size": 533,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "inc/Device/sy_device.h",
+			"settings":
+			{
+				"buffer_size": 709,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "inc/base/sy_types.h",
+			"settings":
+			{
+				"buffer_size": 2108,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/sy_device.h",
+			"settings":
+			{
+				"buffer_size": 1318,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/sy_device.cpp",
+			"settings":
+			{
+				"buffer_size": 8433,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/sy_net.cpp",
+			"settings":
+			{
+				"buffer_size": 1841,
+				"line_ending": "Unix"
+			}
 		}
 	],
 	"build_system": "Packages/C++/C++.sublime-build",
@@ -283,7 +327,7 @@
 				"Set Syntax: HTML"
 			]
 		],
-		"width": 449.0
+		"width": 476.0
 	},
 	"console":
 	{
@@ -300,7 +344,17 @@
 	},
 	"file_history":
 	[
+		"/Users/xul/work/fox/app/src/sy_device.h",
 		"/Users/xul/work/fox/app/inc/base/sy_types.h",
+		"/Users/xul/work/fox/app/src/sy_device.cpp",
+		"/Users/xul/work/fox/app/inc/Device/sy_device.h",
+		"/Users/xul/work/fox/app/inc/NetService/sy_netService.h",
+		"/Users/xul/work/fox/app/src/sy_netService.h",
+		"/Users/xul/work/fox/app/inc/base/sy_net.h",
+		"/Users/xul/work/fox/app/src/sy_net.cpp",
+		"/Users/xul/work/fox/app/inc/Manager/sy_configManager.h",
+		"/Users/xul/work/fox/app/Makefile",
+		"/Users/xul/work/fox/CONFIG",
 		"/Volumes/Transcend/fox/app/inc/Manager/sy_configManager.h",
 		"/Volumes/Transcend/fox/app/src/sy_configManager.h",
 		"/Volumes/Transcend/fox/app/src/sy_netrpc.cpp",
@@ -391,6 +445,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"msetLedStat",
+			"sendCmd",
+			"Thread",
+			"pipe",
 			"buf_status",
 			"PP_IOCTL_GET_TX_STATUS",
 			"get_tx_status",
@@ -478,7 +536,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 8,
 			"sheets":
 			[
 				{
@@ -486,15 +544,15 @@
 					"file": "src/sy_main.cpp",
 					"settings":
 					{
-						"buffer_size": 2327,
+						"buffer_size": 2400,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								548,
-								559
+								1730,
+								1740
 							]
 						],
 						"settings":
@@ -503,32 +561,59 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 850.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "inc/Device/sy_device.h",
+					"file": "src/sy_netServ.h",
 					"settings":
 					{
-						"buffer_size": 708,
+						"buffer_size": 1568,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								603,
-								603
+								812,
+								830
 							]
 						],
 						"settings":
 						{
 							"is_xml": false,
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 367.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/Users/xul/work/fox/Bin/Default",
+					"settings":
+					{
+						"buffer_size": 1135,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								231,
+								231
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 3,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -537,57 +622,29 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "src/sy_device.h",
-					"settings":
-					{
-						"buffer_size": 1336,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1322,
-								1322
-							]
-						],
-						"settings":
-						{
-							"is_xml": false,
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 266.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
 					"buffer": 3,
-					"file": "src/sy_device.cpp",
+					"file": "/Users/xul/work/fox/Bin/Config",
 					"settings":
 					{
-						"buffer_size": 8395,
+						"buffer_size": 957,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2759,
-								2759
+								0,
+								957
 							]
 						],
 						"settings":
 						{
-							"is_xml": false,
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 3,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1346.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -597,15 +654,15 @@
 					"file": "src/sy_printer.cpp",
 					"settings":
 					{
-						"buffer_size": 5806,
+						"buffer_size": 5915,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3969,
-								3969
+								4891,
+								4891
 							]
 						],
 						"settings":
@@ -614,7 +671,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2788.0,
+						"translation.y": 2138.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -624,15 +681,15 @@
 					"file": "src/sy_printer.h",
 					"settings":
 					{
-						"buffer_size": 911,
+						"buffer_size": 905,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								651,
-								651
+								869,
+								869
 							]
 						],
 						"settings":
@@ -641,7 +698,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 35.0,
+						"translation.y": 96.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -658,8 +715,8 @@
 						"selection":
 						[
 							[
-								652,
-								652
+								4945,
+								4954
 							]
 						],
 						"settings":
@@ -668,7 +725,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 195.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -678,15 +735,15 @@
 					"file": "src/sy_netService.cpp",
 					"settings":
 					{
-						"buffer_size": 10303,
+						"buffer_size": 10308,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2021,
-								2021
+								253,
+								263
 							]
 						],
 						"settings":
@@ -696,135 +753,52 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 3247.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 8,
-					"file": "inc/NetService/sy_netService.h",
+					"file": "src/sy_netServ.cpp",
 					"settings":
 					{
-						"buffer_size": 757,
+						"buffer_size": 9719,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								3587,
+								3593
 							]
 						],
 						"settings":
 						{
 							"is_xml": false,
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/C++/C++.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1970.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 9,
-					"file": "src/sy_netService.h",
-					"settings":
-					{
-						"buffer_size": 2008,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1562,
-								1562
-							]
-						],
-						"settings":
-						{
-							"is_xml": false,
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "inc/base/sy_net.h",
-					"settings":
-					{
-						"buffer_size": 703,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								626,
-								626
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "src/sy_net.cpp",
-					"settings":
-					{
-						"buffer_size": 1809,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								950,
-								950
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 500.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 12,
 					"file": "Makefile",
 					"settings":
 					{
-						"buffer_size": 1032,
+						"buffer_size": 1029,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								680,
+								680
 							]
 						],
 						"settings":
@@ -832,40 +806,13 @@
 							"syntax": "Packages/Makefile/Makefile.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 277.0,
+						"translation.y": 157.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 13,
-					"file": "inc/Manager/sy_configManager.h",
-					"settings":
-					{
-						"buffer_size": 1772,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1725,
-								1725
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 14,
+					"buffer": 10,
 					"file": "src/sy_configManager.h",
 					"settings":
 					{
@@ -892,7 +839,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 15,
+					"buffer": 11,
 					"file": "src/sy_netrpc.cpp",
 					"settings":
 					{
@@ -903,8 +850,8 @@
 						"selection":
 						[
 							[
-								499,
-								502
+								1240,
+								1249
 							]
 						],
 						"settings":
@@ -913,13 +860,13 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 189.0,
+						"translation.y": 291.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 16,
+					"buffer": 12,
 					"file": "src/sy_debug.cpp",
 					"settings":
 					{
@@ -946,7 +893,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 17,
+					"buffer": 13,
 					"file": "src/sy_rpcmethod.cpp",
 					"settings":
 					{
@@ -957,8 +904,8 @@
 						"selection":
 						[
 							[
-								4149,
-								4149
+								2552,
+								2552
 							]
 						],
 						"settings":
@@ -967,13 +914,13 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2143.0,
+						"translation.y": 1407.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 18,
+					"buffer": 14,
 					"file": "src/sy_netrpc.h",
 					"settings":
 					{
@@ -994,6 +941,222 @@
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 15,
+					"file": "src/sy_user.cpp",
+					"settings":
+					{
+						"buffer_size": 1424,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								276,
+								276
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 235.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 16,
+					"file": "src/sy_netService.h",
+					"settings":
+					{
+						"buffer_size": 2002,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								904,
+								925
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 240.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 17,
+					"file": "inc/NetService/sy_netServ.h",
+					"settings":
+					{
+						"buffer_size": 533,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								505,
+								513
+							]
+						],
+						"settings":
+						{
+							"is_xml": false,
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 18,
+					"file": "inc/Device/sy_device.h",
+					"settings":
+					{
+						"buffer_size": 709,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								118,
+								118
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 22.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 19,
+					"file": "inc/base/sy_types.h",
+					"settings":
+					{
+						"buffer_size": 2108,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2056,
+								2056
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 847.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 20,
+					"file": "src/sy_device.h",
+					"settings":
+					{
+						"buffer_size": 1318,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								427,
+								439
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 352.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 21,
+					"file": "src/sy_device.cpp",
+					"settings":
+					{
+						"buffer_size": 8433,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2865,
+								2865
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1586.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 22,
+					"file": "src/sy_net.cpp",
+					"settings":
+					{
+						"buffer_size": 1841,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1272,
+								1272
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 886.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1047,12 +1210,12 @@
 		"selected_items":
 		[
 			[
-				"sy_",
-				"src/sy_printer.cpp"
-			],
-			[
 				"main",
 				"src/sy_main.cpp"
+			],
+			[
+				"sy_",
+				"src/sy_printer.cpp"
 			],
 			[
 				"sy_p",

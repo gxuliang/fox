@@ -71,9 +71,9 @@ int main(int argc, char* argv[])
 	//INetService::instance()->setConfig("NetService", aConfig["NetService"]);
 	tracepoint();
 	//ICtlNetService::instance()->setConfig("NetService", aConfig["NetService"]);
-	tracepoint();
 
 	INetServ::instance()->setConfig("ServerInfo", aConfig["ServerInfo"]);
+	tracepoint();
 
 	IPrinter printIn = IPrinter(0, aConfig["PrinterIn"], &printOut);//a=打印机输入，b=打印机输出
 	
