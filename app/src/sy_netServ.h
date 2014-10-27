@@ -59,6 +59,8 @@ private:
 	CProtocol *mprotocol;
 	int fd[2];
 	bool startflag;
+	CMutex		m_mutex;
+
 
 
 

@@ -45,6 +45,13 @@ int main(int argc, char* argv[])
 	CConfigTable aConfig;
 	IConfigManager::config(mainPath, defaultPath);
 	IConfigManager::instance()->getConfig("All", aConfig);
+
+	IPrinter printOut = IPrinter(1, aConfig["PrinterOut"]);
+	gPrintOut = &printOut;
+
+	INetServ::instance()->setConfig("ServerInfo", aConfig["ServerInfo"]);
+	tracepoint();
+
 	IDevice::instance()->setConfig1("tcp-ip", aConfig["tcp-ip"]);
 	IConfigManager::instance()->setConfig("tcp-ip", aConfig["tcp-ip"]);//用于把实际mac地址回写入配置
 	rewrite_software();
@@ -64,16 +71,14 @@ int main(int argc, char* argv[])
 		sleep(1);
 	}
 
-	IPrinter printOut = IPrinter(1, aConfig["PrinterOut"]);
-	gPrintOut = &printOut;
+	
 
 
 	//INetService::instance()->setConfig("NetService", aConfig["NetService"]);
 	tracepoint();
 	//ICtlNetService::instance()->setConfig("NetService", aConfig["NetService"]);
 
-	INetServ::instance()->setConfig("ServerInfo", aConfig["ServerInfo"]);
-	tracepoint();
+
 
 	IPrinter printIn = IPrinter(0, aConfig["PrinterIn"], &printOut);//a=打印机输入，b=打印机输出
 	

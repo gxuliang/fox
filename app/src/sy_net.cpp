@@ -28,8 +28,10 @@ int MyClient::read(void* buf, int len, int timeout)
 	fd_set readfds;
 
 	if(fd <=0 || conn_flag == false)
+	{
+		tracepoint();
 		return false;
-
+	}
 	FD_ZERO(&readfds);
 	FD_SET(fd, &readfds);
 	struct timeval overtime;
@@ -40,11 +42,23 @@ int MyClient::read(void* buf, int len, int timeout)
 		ret = ::select(fd+1, &readfds, NULL, NULL, NULL);
 	}
 	else
+	{
 		ret = ::select(fd+1, &readfds, NULL, NULL, &overtime);
+	}
+
 	if(ret <= 0)
+	{
+		tracepoint();
 		return ret;
+	}
 	else
+	{
+		tracepoint();
 		ret = ::recv(fd, buf, len, 0);
+		if(ret <0)
+			printf("recv error =%d\n", errno);
+		printf("ret =%d\n", ret);
+	}
 	return ret;
 }
 
@@ -88,8 +102,8 @@ bool MyClient::connect(const char* ip, const ushort port)
 		perror("socket");
 		return false;
 	}
-	unsigned long ul = 1;
-	ioctl(fd, FIONBIO, &ul); //设置为非阻塞模式
+	//unsigned long ul = 1;
+	//ioctl(fd, FIONBIO, &ul); //设置为非阻塞模式
 
 	::bzero(&addr, sizeof(struct sockaddr_in));
 	addrlen = sizeof(struct sockaddr);
@@ -98,6 +112,7 @@ bool MyClient::connect(const char* ip, const ushort port)
 	addr.sin_port = htons(port);
 	if(::connect(fd, (struct sockaddr*)&addr, addrlen) < 0)
 	{
+		/*
 		struct timeval tm;
 		fd_set set;
 		int error, len;
@@ -112,10 +127,12 @@ bool MyClient::connect(const char* ip, const ushort port)
         	if(error == 0)
         	{	
         		conn_flag = true;
+        		ul = 0;
+        		ioctl(fd, FIONBIO, &ul); //设置为阻塞模式
         		return true;
         	}
         }
-
+		*/
 		perror("connect");
 		close();
 		return false;

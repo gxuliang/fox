@@ -19,7 +19,7 @@ void logsave(int hour,const char* szcontent)
 	static int mhour = 0;
 	static int fd = 0;
 
-	if(access("/config/rc.d/K02", R_OK|W_OK) < 0)
+	if(access("/config/rc.d/K02", R_OK|W_OK) >= 0)
 	{
 		//printf("%s\n", "88888888888888888888888888888");
 		return;
