@@ -127,6 +127,7 @@ void CDevice::ThreadProc()
 
 					
 					//infof("++++++++++++++msetLedStat[%d] = %d\n", i, msetLedStat[i]);
+					break;
 				default:break;
 			}
 		}
@@ -244,7 +245,7 @@ bool CDevice::setNetWork(const CConfigTable& table)
 			return false;
 		//INetService::instance()->restart();
 		//ICtlNetService::instance()->restart();
-		INetServ::instance()->restart();
+		//INetServ::instance()->restart();
 		tracepoint();
 		//infof("-------------------------\n");
 		//sleep(3);

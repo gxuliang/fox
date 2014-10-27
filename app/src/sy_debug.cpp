@@ -16,30 +16,37 @@
 
 void logsave(int hour,const char* szcontent)
 {
-	static int mhour = 0;
+	static int mhour = 100;
 	static int fd = 0;
 
 	if(access("/config/rc.d/K02", R_OK|W_OK) >= 0)
 	{
-		//printf("%s\n", "88888888888888888888888888888");
+		printf("%s\n", "88888888888888888888888888888");
 		return;
 	}
 
-	if(mhour == 0 || mhour != hour)
+	//printf("%s\n", "7777777777777777777777777777");
+
+	if(mhour != hour)
 	{
 		if(fd > 0)
 		{
 			close(fd);
 			fd = 0;
 		}
-		fd = open("/config/log", O_WRONLY | O_CREAT);
+		system("rm -rf /config/log");
+		fd = open("/config/log", O_WRONLY | O_CREAT, S_IWUSR);
 		mhour = hour;		
+		//printf("%s\n", "9999999999999999999999999999");
+
 	}
 
 	if(fd > 0)
 	{
 		write(fd, szcontent, strlen(szcontent));
 		//write(fd, "\r\n", 2);
+		//printf("%s\n", "44444444444444444444444444");
+
 	}
 
 }

@@ -110,6 +110,7 @@ bool MyClient::connect(const char* ip, const ushort port)
 	addr.sin_family = AF_INET;
 	addr.sin_addr.s_addr = inet_addr(ip);
 	addr.sin_port = htons(port);
+	tracepoint();
 	if(::connect(fd, (struct sockaddr*)&addr, addrlen) < 0)
 	{
 		/*
@@ -133,11 +134,12 @@ bool MyClient::connect(const char* ip, const ushort port)
         	}
         }
 		*/
+		tracepoint();
 		perror("connect");
 		close();
 		return false;
 	}
-
+	tracepoint();
 	conn_flag = true;
 	return true;
 }
