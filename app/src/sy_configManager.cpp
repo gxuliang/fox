@@ -263,7 +263,7 @@ void CConfigManager::ThreadProc()
 		{
 			tracepoint();
 			infof("%p\n", *iter);
-			infof("str is [%s]\n", (*iter)->str);
+			infof("str is [%s], name is[%s]\n", (*iter)->str, name);
 			if(strcmp((*iter)->str, name) == 0)
 			{
 				tracepoint();

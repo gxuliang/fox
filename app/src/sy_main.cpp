@@ -46,11 +46,7 @@ int main(int argc, char* argv[])
 	IConfigManager::config(mainPath, defaultPath);
 	IConfigManager::instance()->getConfig("All", aConfig);
 
-	IPrinter printOut = IPrinter(1, aConfig["PrinterOut"]);
-	gPrintOut = &printOut;
-
-	INetServ::instance()->setConfig("ServerInfo", aConfig["ServerInfo"]);
-	tracepoint();
+	
 
 	IDevice::instance()->setConfig1("tcp-ip", aConfig["tcp-ip"]);
 	IConfigManager::instance()->setConfig("tcp-ip", aConfig["tcp-ip"]);//用于把实际mac地址回写入配置
@@ -71,6 +67,11 @@ int main(int argc, char* argv[])
 		sleep(1);
 	}
 
+	IPrinter printOut = IPrinter(1, aConfig["PrinterOut"]);
+	gPrintOut = &printOut;
+
+	INetServ::instance()->setConfig("ServerInfo", aConfig["ServerInfo"]);
+	tracepoint();
 	
 
 

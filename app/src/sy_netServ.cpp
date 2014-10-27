@@ -100,6 +100,8 @@ void CNetServ::ThreadProc()
 	{
 		if(sock1->conn_flag == false)
 		{
+			IDevice::instance()->setLed(IDevice::LED_CONN, 2);
+			IDevice::instance()->setLed(IDevice::LED_ALARM, 3, 1, 10);//1=0.5秒，10=5秒
 			if(sock1->connect(ipinfo[i].ipaddr.c_str(), ipinfo[i].port[1]) == false)
 			{
 				warnf("===============port=%d======%s====\n", ipinfo[i].port[1], ipinfo[i].ipaddr.c_str());

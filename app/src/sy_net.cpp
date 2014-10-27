@@ -11,7 +11,7 @@
 
 MyClient::MyClient()
 {
-	fd = 0;
+	fd = -1;
 	conn_flag = false;
 	
 
@@ -113,12 +113,12 @@ bool MyClient::connect(const char* ip, const ushort port)
 	tracepoint();
 	if(::connect(fd, (struct sockaddr*)&addr, addrlen) < 0)
 	{
-		/*
+	/*	
 		struct timeval tm;
 		fd_set set;
 		int error, len;
 
-		tm.tv_sec  = 5;
+		tm.tv_sec  = 10;
         tm.tv_usec = 0;
         FD_ZERO(&set);
         FD_SET(fd, &set);

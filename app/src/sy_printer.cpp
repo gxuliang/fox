@@ -259,6 +259,11 @@ void IPrinter::ThreadProc()
 					while(len > 0)
 					{
 						ret = this->pWriter->write(&tmp[cnt], len);
+						if(ret <= 0)
+						{
+							this->pWriter->restart();
+							break;
+						}
 						len = len - ret;
 						cnt = cnt + ret;
 					}
