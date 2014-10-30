@@ -42,6 +42,7 @@ OBJS = 	$(OBJ)sy_semaphore.o \
 		$(OBJ)sy_device.o		\
 		$(OBJ)sy_netServ.o		\
 		$(OBJ)sy_upgrade.o		\
+		$(OBJ)sy_testmode.o		\
 		$(OBJ)sy_main.o	\
 				
 				

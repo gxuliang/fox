@@ -256,6 +256,7 @@ void IPrinter::ThreadProc()
 				
 				if(this->pWriter->getState()==true)
 				{
+					/*
 					while(len > 0)
 					{
 						ret = this->pWriter->write(&tmp[cnt], len);
@@ -267,10 +268,22 @@ void IPrinter::ThreadProc()
 						len = len - ret;
 						cnt = cnt + ret;
 					}
+					*/
+					ret = this->pWriter->write(tmp, len);
+					if(ret < 0)//发送不成功
+					{
+						if(ret == -2)
+						{//标示有备用服务器，等待5秒后再尝试发送
+							sleep(5);
+							ret = this->pWriter->write(tmp, len);
+						}
+						if(ret < 0)//还是小于0转为本地模式
+							put(tmp, len);
+					}
 				}
 				else
 				{
-					put(&tmp[cnt], len);
+					put(tmp, len);
 				}
 					
 				

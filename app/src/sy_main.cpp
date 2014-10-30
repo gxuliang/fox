@@ -15,7 +15,7 @@
 #include "sy_printer.h"
 #include "Device/sy_device.h"
 #include "sy_upgrade.h"
-
+#include "base/sy_testmode.h"
 
 const char * mainPath = "/config/Config";
 const char * defaultPath = "/tmp/Default";
@@ -31,6 +31,7 @@ int PP_fd;
 void rewrite_software();
 int main(int argc, char* argv[])
 {
+	
 	infof("app start!\n");
 	infof("mainPath = [%s]\n", mainPath);
 	infof("defaultPath = [%s]\n", defaultPath);
@@ -83,6 +84,12 @@ int main(int argc, char* argv[])
 
 	IPrinter printIn = IPrinter(0, aConfig["PrinterIn"], &printOut);//a=打印机输入，b=打印机输出
 	
+	if(argc == 2)
+	{//测试模式
+		infof("%d--%s\n", argc, argv[1]);
+		//return 1;
+		ITestMode::instance()->run(argv[1]);
+	}
 	
 	//infof("<%p>\n", INetService::instance());
 

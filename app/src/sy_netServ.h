@@ -28,6 +28,7 @@ struct IPINFO
 {
 	std::string ipaddr;
 	ushort port[2];	
+	bool enable;
 };
 
 class CNetServ : public INetServ, public CThread, public ISetConfig

@@ -179,6 +179,20 @@ bool SYRpc::getState(const Json::Value& root, Json::Value& response)
 
 
 	}
+	else if(root["params"]["name"] == "UpgradeChk")
+	{
+		response["params"]["name"] = name;
+		if(gUpgrade->fileChecked() == true)
+			response["params"]["flag"] = "true";
+		else
+			response["params"]["flag"] = "false";
+
+		
+		response["result"] = "true";
+
+		std::cout << "ans " << response << std::endl;
+	}
+
 	
 
 	return true;

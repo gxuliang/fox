@@ -13,6 +13,8 @@
 #include "sy_netServ.h"
 #include "sy_printer.h"
 #include "Device/sy_device.h"
+#include "base/sy_testmode.h"
+
 
 #define BUF_MAX (1024*2)
 
@@ -48,7 +50,8 @@ bool CNetServ::reg(IPrinter* p)
 
 bool CNetServ::getState()
 {
-	if(sock2 != NULL && sock2->conn_flag == true)
+	if(sock1 != NULL && sock1->conn_flag == true && 
+		sock2 != NULL && sock2->conn_flag == true)
 		return true;
 	else
 		return false;
@@ -64,14 +67,15 @@ bool CNetServ::setConfig(const char* name, const CConfigTable& table)
 	ipinfo[1].ipaddr = table["ipinfo"][1]["ipaddr"].asString();
 	ipinfo[1].port[0] = table["ipinfo"][1]["port"][0u].asInt();
 	ipinfo[1].port[1] = table["ipinfo"][1]["port"][1].asInt();
+	ipinfo[1].enable = table["ipinfo"][1]["enable"].asBool();
 	
 	count = table["count"].asInt();
 	timeout = table["timeout"].asInt();
 	infof("============================================\n");
-	infof("ip[%s],port[%d][%d],ip[%s],port[%d][%d],count:%d,timeout:%d\n", 
+	infof("ip[%s],port[%d][%d],ip[%s],port[%d][%d],count:%d,timeout:%d,enable=%d\n", 
 		ipinfo[0].ipaddr.c_str(),ipinfo[0].port[0],ipinfo[0].port[1],
 		ipinfo[1].ipaddr.c_str(),ipinfo[1].port[0],ipinfo[1].port[1],
-		count,timeout);
+		count,timeout,ipinfo[1].enable);
 	infof("============================================\n");
 	restart();
 
@@ -85,6 +89,8 @@ void CNetServ::ThreadProc()
 	
 	sock1 = new MyClient();//控制
 	sock2 = new MyClient();//数据
+
+	static bool tm_flag = false;
 
 	int i = 0,cnt = 0;
 	
@@ -100,14 +106,26 @@ void CNetServ::ThreadProc()
 	{
 		if(sock1->conn_flag == false)
 		{
+			if(ipinfo[1].enable == true)
+			{
+				tracepoint();
+				i = (i+1) & 0x01;
+			}
+			else
+			{
+				tracepoint();
+				i = 0;
+			}
+
 			IDevice::instance()->setLed(IDevice::LED_CONN, 2);
 			IDevice::instance()->setLed(IDevice::LED_ALARM, 3, 1, 10);//1=0.5秒，10=5秒
-			if(sock1->connect(ipinfo[i].ipaddr.c_str(), ipinfo[i].port[1]) == false)
+			if(sock1->connect(ipinfo[i].ipaddr.c_str(), ipinfo[i].port[1], timeout) == false)
 			{
 				warnf("===============port=%d======%s====\n", ipinfo[i].port[1], ipinfo[i].ipaddr.c_str());
 				IDevice::instance()->setLed(IDevice::LED_CONN, 2);
 				IDevice::instance()->setLed(IDevice::LED_ALARM, 3, 1, 10);//1=0.5秒，10=5秒
 				sock1->perror("CNetServ::connect");
+				/*
 				sleep(timeout);
 				cnt++;
 				if(cnt > count)
@@ -115,6 +133,8 @@ void CNetServ::ThreadProc()
 					cnt = 0;
 					i = (i+1) & 0x01;
 				}
+				*/
+
 				
 				continue;
 				
@@ -124,11 +144,11 @@ void CNetServ::ThreadProc()
 
 		if(mprotocol->alarm == false)
 			IDevice::instance()->setLed(IDevice::LED_ALARM, 0);
-		infof("sock1->fd = %d==============98========%s====\n", sock1->fd,ipinfo[0].ipaddr.c_str());
+		infof("sock1->fd = %d==============98========%s====\n", sock1->fd,ipinfo[i].ipaddr.c_str());
 
 		if(sock2->conn_flag == false)
 		{
-			infof("sock2->fd = %d==============112=======%s=====\n", sock2->fd, ipinfo[1].ipaddr.c_str());
+			infof("sock2->fd = %d==============112=======%s=====\n", sock2->fd, ipinfo[i].ipaddr.c_str());
 			if(sock2->connect(ipinfo[i].ipaddr.c_str(), ipinfo[i].port[0]) == false)
 			{//这个错误一般不会发生
 				IDevice::instance()->setLed(IDevice::LED_CONN, 2);
@@ -147,16 +167,38 @@ void CNetServ::ThreadProc()
 		FD_SET(sock1->fd, &readfds);
 		FD_SET(sock2->fd, &readfds);
 		FD_SET(fd[0], &readfds);
-		overtime.tv_sec = 3;
+		overtime.tv_sec = 2;
 		overtime.tv_usec = 0;
 
 		int max_fd = (sock1->fd > sock2->fd)?sock1->fd:sock2->fd;
-		errorf("----------------%d+++++++++\n",overtime.tv_sec);
-		int ret = ::select(max_fd+1, &readfds, NULL, NULL, &overtime);
+		max_fd = (max_fd > fd[0]) ? max_fd : fd[0];
+		//int ret = ::select(max_fd+1, &readfds, NULL, NULL, &overtime);
+
+		int ret;
+		if(tm_flag == false)
+		{
+			tracepoint();
+			ret = ::select(max_fd+1, &readfds, NULL, NULL, NULL);//取消心跳包，这里阻塞就可以了
+		}
+		else
+		{
+			tracepoint();
+			errorf("----------------%d+++++++++\n",overtime.tv_sec);
+			tm_flag = false;
+			ret = ::select(max_fd+1, &readfds, NULL, NULL, &overtime);
+		}
+		tracepoint();
+
+		if(sock1->conn_flag == false || sock2->conn_flag == false)
+		{
+			errorf("socket have been closed!\n");
+			continue;
+		}
 		if(ret == 0)
 		{//3秒超时到了，发送心跳包
-			//tracepoint();
+			tracepoint();
 			//perror("select:");
+			/*
 			errorf("++++++++++++++++%d+++%d++++++\n",overtime.tv_sec,errno);
 
 
@@ -178,6 +220,11 @@ void CNetServ::ThreadProc()
 				sock2->close();
 				continue;
 			}
+			*/
+			errorf("something error=%d!\n",errno);
+			sock1->close();
+			sock2->close();
+			continue;
 		}
 		else if(ret < 0)
 		{
@@ -192,10 +239,18 @@ void CNetServ::ThreadProc()
 			if(FD_ISSET(fd[0], &readfds) != 0)
 			{
 				int len = read(fd[0], buf, BUF_MAX);
-				//tracepoint();
-				errorf("param changed, close socket!\n");
-				sock1->close();
-				sock2->close();
+				tracepoint();
+				if(buf[0] == 1)
+				{
+					errorf("param changed, close socket!\n");
+					sock1->close();
+					sock2->close();
+				}
+				else if(buf[0] == 2)
+				{
+					errorf("data send,i will wait 2 sec!\n");
+					tm_flag = true;
+				}
 				continue;
 			}
 			else if(FD_ISSET(sock1->fd, &readfds) != 0)
@@ -225,12 +280,15 @@ void CNetServ::ThreadProc()
 				{
 					infof("read network data len = %d\n", len);
 					debugf("[%c]----%p--%p\n", buf[0],mPrinter,gPrintOut);
-
+					
 					while(mPrinter->put(buf, len) == false)
 					{
 						errorf("buf is full,try it again after 1sc...\n");
 						sleep(1);
 					}
+					
+					tracepoint();
+					ITestMode::instance()->save(buf, len);
 				}
 				else
 				{
@@ -287,6 +345,8 @@ bool CNetServ::start()
 		this->CreateThread();
 		startflag = true;
 	}
+	char tmp =1;
+	::write(fd[1], &tmp, 1);
 	infof("CNetServ::start ok\n");
 	return true;
 }
@@ -313,7 +373,28 @@ int CNetServ::write(const char* buf, int len)
 	if(sock2 == NULL)
 		return -1;
 
-	return sock2->write(buf, len);
+	int ret=0, cnt = 0;
+	while(len > 0)
+	{
+		char tmp =2;
+		tracepoint();
+		ret = ::write(fd[1], &tmp, 1);
+		infof("ret = %d\n", ret);
+		ret = sock2->write(&buf[cnt], len);
+		if(ret <= 0)
+		{
+			restart();
+			if(ipinfo[1].enable == true)
+			{//说明有备用服务器，建议调用者等待5秒，等系统尝试另一个服务器后再发送一次
+				return -2;
+			}
+			return -1;
+		}
+		len = len - ret;
+		cnt = cnt + ret;
+	}
+
+	return 1;
 }
 
 int CNetServ::write2(const char* buf, int len)

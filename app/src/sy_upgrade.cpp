@@ -8,6 +8,10 @@
 
 #include "sy_upgrade.h"
 
+bool IUpgrade::fileChecked(void)
+{
+	return flag;
+}
 bool IUpgrade::putfile(const char* file)
 {
 	
@@ -17,6 +21,8 @@ bool IUpgrade::putfile(const char* file)
 
 	sprintf(buf, "unzip -o %s -d /tmp", file);
 	infof("buf is [%s]\n", buf);
+
+	flag = false;
 
 	if((fp = popen(buf, "r")) == NULL)
 	{
@@ -35,6 +41,8 @@ bool IUpgrade::putfile(const char* file)
 		tracepoint();
 		return false;
 	}
+
+	flag = true;
 
 	const int size = 32*1024;
 	char* cbuf = new char[size + 1];

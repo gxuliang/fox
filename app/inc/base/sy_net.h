@@ -30,7 +30,7 @@ public:
 
 	MyClient();
 	~MyClient();
-	bool connect(const char* ip, const ushort port);
+	bool connect(const char* ip, const ushort port, const int tm=0);
 	int read(void* , int , int tm = 0);
 	int write(const void* , int );
 	bool close();
