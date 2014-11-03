@@ -36,10 +36,34 @@ void CTestMode::run(const char* path)
 	flag = 1;
 
 	char buf[2000]="";
-	int len;
+	int len,ret;
 	while((len = read(fd, buf, 2000)) > 0)
 	{
-		INetServ::instance()->write(buf, len);
+
+		if(INetServ::instance()->getState()==true)
+		{
+			
+			ret = INetServ::instance()->write(buf, len);
+			tracepoint();
+			if(ret < 0)//发送不成功
+			{
+				tracepoint();
+				if(ret == -2)
+				{//标示有备用服务器，等待5秒后再尝试发送
+					sleep(5);
+					ret = INetServ::instance()->write(buf, len);
+				}
+				//if(ret < 0)//还是小于0转为本地模式
+					//put(tmp, len);
+			}
+		}
+		else
+		{
+			//put(tmp, len);
+		}
+
+
+		//INetServ::instance()->write(buf, len);
 		fatalf("AAA============write len = %d================\n", len);
 		//usleep(200*1000);
 	}

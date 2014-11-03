@@ -7,6 +7,8 @@
 
 #ifndef _SY_NET_H_
 #define _SY_NET_H_
+ 
+#include "base/sy_mutex.h"
 
 
 class MySock
@@ -41,6 +43,8 @@ public:
 private:
 	struct sockaddr_in addr;
 	socklen_t addrlen;
+	CMutex		m_mutex;
+
 };
 
 

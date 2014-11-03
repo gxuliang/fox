@@ -89,6 +89,7 @@ int main(int argc, char* argv[])
 		infof("%d--%s\n", argc, argv[1]);
 		//return 1;
 		ITestMode::instance()->run(argv[1]);
+		//ITestMode::instance()->run("117M.txt");
 	}
 	
 	//infof("<%p>\n", INetService::instance());

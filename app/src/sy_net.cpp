@@ -8,8 +8,10 @@
 #include "base/sy_types.h"
 #include "base/sy_debug.h"
 #include "base/sy_net.h"
+#include "base/sy_guard.h"
 
-MyClient::MyClient()
+
+MyClient::MyClient(): m_mutex(CMutex::mutexRecursive)
 {
 	fd = -1;
 	conn_flag = false;
@@ -79,6 +81,8 @@ int MyClient::write(const void* buf, int len)
 
 bool MyClient::close()
 {
+	CGuard guard(m_mutex);
+
 	bool ret = false;
 	//std::cout << "111:" << fd << std::endl;
 	
@@ -106,6 +110,9 @@ bool MyClient::connect(const char* ip, const ushort port, const int timeout)
 		perror("socket");
 		return false;
 	}
+
+	CGuard guard(m_mutex);
+
 
 	int sendlen = 512*1024;
 	ret = ::setsockopt(fd, SOL_SOCKET, SO_SNDBUF, &sendlen, sizeof(int));

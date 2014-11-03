@@ -59,6 +59,7 @@ private:
 	MyClient* sock1,*sock2;
 	CProtocol *mprotocol;
 	int fd[2];
+	int fd2[2];
 	bool startflag;
 	CMutex		m_mutex;
 

@@ -36,6 +36,7 @@ CNetServ::CNetServ(): m_mutex(CMutex::mutexRecursive)
 	buf = new char[BUF_MAX];
 	mprotocol = new CProtocol();
 	pipe(fd);
+	pipe(fd2);
 	startflag = false;
 
 }
@@ -119,7 +120,7 @@ void CNetServ::ThreadProc()
 
 			IDevice::instance()->setLed(IDevice::LED_CONN, 2);
 			IDevice::instance()->setLed(IDevice::LED_ALARM, 3, 1, 10);//1=0.5秒，10=5秒
-			if(sock1->connect(ipinfo[i].ipaddr.c_str(), ipinfo[i].port[1], timeout) == false)
+			if(sock1->connect(ipinfo[i].ipaddr.c_str(), ipinfo[i].port[1], timeout+1) == false)
 			{
 				warnf("===============port=%d======%s====\n", ipinfo[i].port[1], ipinfo[i].ipaddr.c_str());
 				IDevice::instance()->setLed(IDevice::LED_CONN, 2);
@@ -167,7 +168,7 @@ void CNetServ::ThreadProc()
 		FD_SET(sock1->fd, &readfds);
 		FD_SET(sock2->fd, &readfds);
 		FD_SET(fd[0], &readfds);
-		overtime.tv_sec = 2;
+		overtime.tv_sec = timeout;
 		overtime.tv_usec = 0;
 
 		int max_fd = (sock1->fd > sock2->fd)?sock1->fd:sock2->fd;
@@ -248,7 +249,7 @@ void CNetServ::ThreadProc()
 				}
 				else if(buf[0] == 2)
 				{
-					errorf("data send,i will wait 2 sec!\n");
+					errorf("data send,i will wait %d sec!\n", timeout);
 					tm_flag = true;
 				}
 				continue;
@@ -275,6 +276,8 @@ void CNetServ::ThreadProc()
 			else if(FD_ISSET(sock2->fd, &readfds) != 0)
 			{
 				//tracepoint();
+				char tmp=9;
+				::write(fd2[1], &tmp, 1);
 				int len = sock2->read(buf, BUF_MAX);
 				if(len > 0)
 				{
@@ -327,8 +330,8 @@ bool CNetServ::stop()
 
 	infof("CNetServ::stopping...\n");
 	//this->CloseTread();
-	sock1->close();
-	sock2->close();
+	//int ret = ::write(fd[1], &tmp, 3);
+	//infof("ret = %d\n", ret);
 	infof("CNetServ::stop ok!\n");
 	//sleep(3);
 	//system("reboot");
@@ -376,10 +379,8 @@ int CNetServ::write(const char* buf, int len)
 	int ret=0, cnt = 0;
 	while(len > 0)
 	{
-		char tmp =2;
 		tracepoint();
-		ret = ::write(fd[1], &tmp, 1);
-		infof("ret = %d\n", ret);
+
 		ret = sock2->write(&buf[cnt], len);
 		if(ret <= 0)
 		{
@@ -390,8 +391,46 @@ int CNetServ::write(const char* buf, int len)
 			}
 			return -1;
 		}
+
 		len = len - ret;
 		cnt = cnt + ret;
+	}
+
+	if(timeout > 0)
+	{//大于0才检查是否有数据接收
+		char tmp =2;
+
+		ret = ::write(fd[1], &tmp, 1);
+		infof("ret = %d\n", ret);
+
+		fd_set mreadfds;
+		struct timeval movertime;
+		FD_ZERO(&mreadfds);
+		FD_SET(fd2[0], &mreadfds);
+		movertime.tv_sec = timeout;
+		movertime.tv_usec = 0;
+
+		ret = ::select(fd2[0]+1, &mreadfds, NULL, NULL, &movertime);
+		if(ret == 0)
+		{
+			errorf("serve is timeout!reconnect it!\n");
+			restart();
+			if(ipinfo[1].enable == true)
+			{//说明有备用服务器，建议调用者等待5秒，等系统尝试另一个服务器后再发送一次
+				return -2;
+			}
+			return -1;
+		}
+		else if(ret > 0)
+		{
+			tracepoint();
+			if(FD_ISSET(fd2[0], &mreadfds) != 0)
+			{
+				char tmp2[64];
+				tracepoint();
+				::read(fd2[0], tmp2, 64);
+			}
+		}
 	}
 
 	return 1;
