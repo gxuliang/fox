@@ -171,7 +171,7 @@
 			"file": "src/sy_main.cpp",
 			"settings":
 			{
-				"buffer_size": 2555,
+				"buffer_size": 2599,
 				"line_ending": "Unix"
 			}
 		},
@@ -195,7 +195,7 @@
 			"file": "src/sy_testmode.cpp",
 			"settings":
 			{
-				"buffer_size": 1308,
+				"buffer_size": 1712,
 				"line_ending": "Unix"
 			}
 		},
@@ -235,7 +235,7 @@
 			"file": "src/sy_net.cpp",
 			"settings":
 			{
-				"buffer_size": 3451,
+				"buffer_size": 3563,
 				"line_ending": "Unix"
 			}
 		},
@@ -251,7 +251,7 @@
 			"file": "inc/base/sy_net.h",
 			"settings":
 			{
-				"buffer_size": 719,
+				"buffer_size": 767,
 				"line_ending": "Unix"
 			}
 		},
@@ -259,7 +259,7 @@
 			"file": "src/sy_netServ.cpp",
 			"settings":
 			{
-				"buffer_size": 12429,
+				"buffer_size": 13152,
 				"line_ending": "Unix"
 			}
 		},
@@ -284,6 +284,14 @@
 			"settings":
 			{
 				"buffer_size": 9271,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/sy_netServ.h",
+			"settings":
+			{
+				"buffer_size": 1643,
 				"line_ending": "Unix"
 			}
 		}
@@ -437,6 +445,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"tm_flag",
+			"timeout",
 			"instance",
 			"up",
 			"asInt",
@@ -533,7 +543,7 @@
 	"groups":
 	[
 		{
-			"selected": 11,
+			"selected": 5,
 			"sheets":
 			[
 				{
@@ -541,24 +551,25 @@
 					"file": "src/sy_main.cpp",
 					"settings":
 					{
-						"buffer_size": 2555,
+						"buffer_size": 2599,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								192,
-								227
+								2009,
+								2009
 							]
 						],
 						"settings":
 						{
+							"is_xml": false,
 							"syntax": "Packages/C++/C++.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 835.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -622,23 +633,24 @@
 					"file": "src/sy_testmode.cpp",
 					"settings":
 					{
-						"buffer_size": 1308,
+						"buffer_size": 1712,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								673,
-								673
+								539,
+								539
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C++.tmLanguage"
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 481.0,
+						"translation.y": 570.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -683,8 +695,8 @@
 						"selection":
 						[
 							[
-								5143,
-								5159
+								2534,
+								2540
 							]
 						],
 						"settings":
@@ -693,7 +705,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 3837.0,
+						"translation.y": 1888.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -757,15 +769,15 @@
 					"file": "src/sy_net.cpp",
 					"settings":
 					{
-						"buffer_size": 3451,
+						"buffer_size": 3563,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1733,
-								1733
+								150,
+								150
 							]
 						],
 						"settings":
@@ -774,7 +786,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1415.0,
+						"translation.y": 44.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -810,15 +822,15 @@
 					"file": "inc/base/sy_net.h",
 					"settings":
 					{
-						"buffer_size": 719,
+						"buffer_size": 767,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								506,
-								506
+								108,
+								108
 							]
 						],
 						"settings":
@@ -827,7 +839,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 80.0,
+						"translation.y": 180.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -837,15 +849,15 @@
 					"file": "src/sy_netServ.cpp",
 					"settings":
 					{
-						"buffer_size": 12429,
+						"buffer_size": 13152,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6534,
-								6534
+								6748,
+								6748
 							]
 						],
 						"settings":
@@ -854,7 +866,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 4058.0,
+						"translation.y": 5538.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -934,7 +946,34 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2567.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 15,
+					"file": "src/sy_netServ.h",
+					"settings":
+					{
+						"buffer_size": 1643,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1078,
+								1078
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 534.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

@@ -37,7 +37,7 @@ void CTestMode::run(const char* path)
 
 	char buf[2000]="";
 	int len,ret;
-	while((len = read(fd, buf, 2000)) > 0)
+	while((len = ::read(fd, buf, 2000)) > 0)
 	{
 
 		if(INetServ::instance()->getState()==true)
@@ -68,7 +68,8 @@ void CTestMode::run(const char* path)
 		//usleep(200*1000);
 	}
 	errorf("============sned end================\n");
-	close(fd);
+	::close(fd);
+	tracepoint();
 }
 void CTestMode::save(char* buf, int len)
 {

@@ -141,9 +141,9 @@ bool IPrinter::put(const char* dat,int len)
 	while(i < len)
 	{
 		infof("fd = %d, buf[0] = %c, len = %d\n", this->fd, dat[0], len);
-		res = write(this->fd, &dat[i], len-i);
+		res = ::write(this->fd, &dat[i], len-i);
 		i += res;
-		//infof("res = %d\n", res);
+		infof("res = %d\n", res);
 	}
 
 	return true;

@@ -143,8 +143,7 @@ void CNetServ::ThreadProc()
 		}
 		infof("++++++++++++++port=%d======%s====\n", ipinfo[i].port[1], ipinfo[i].ipaddr.c_str());
 
-		if(mprotocol->alarm == false)
-			IDevice::instance()->setLed(IDevice::LED_ALARM, 0);
+		
 		infof("sock1->fd = %d==============98========%s====\n", sock1->fd,ipinfo[i].ipaddr.c_str());
 
 		if(sock2->conn_flag == false)
@@ -160,6 +159,9 @@ void CNetServ::ThreadProc()
 			}
 		}
 
+		if(mprotocol->alarm == false)
+			IDevice::instance()->setLed(IDevice::LED_ALARM, 0);
+		
 		IDevice::instance()->setLed(IDevice::LED_CONN, 0);
 		infof("sock2->fd = %d==============113============\n", sock2->fd);
 
